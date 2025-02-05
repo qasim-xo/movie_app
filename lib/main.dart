@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/core/providers/theme_mode_provider.dart';
 import 'package:movie_app/router/app_router.dart';
@@ -8,8 +9,9 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 final appRouter = AppRouter();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   setupDI();
   runApp(ProviderScope(child: const MyApp()));
 }

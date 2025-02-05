@@ -20,7 +20,7 @@ class _NavigationScreenState extends ConsumerState<NavigationScreen> {
   Widget build(BuildContext context) {
     return AutoTabsRouter(
       navigatorObservers: () => [HeroController()],
-      routes: [HomeRoute()],
+      routes: [HomeRoute(), HomeRoute(), HomeRoute(), HomeRoute()],
       builder: (context, child) {
         final tabRouter = AutoTabsRouter.of(context);
         final selectedIndex = tabRouter.activeIndex;

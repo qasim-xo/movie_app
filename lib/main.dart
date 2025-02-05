@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/core/providers/theme_mode_provider.dart';
 import 'package:movie_app/router/app_router.dart';
+import 'package:movie_app/theme/app_theme.dart';
+import 'package:movie_app/utils/dependency_injection.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 final appRouter = AppRouter();
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupDI();
   runApp(ProviderScope(child: const MyApp()));
 }
 
@@ -22,9 +26,11 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeProvider);
     return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme:
-            themeMode == ThemeMode.light ? ThemeData.light() : ThemeData.dark(),
+        theme: themeMode == ThemeMode.light
+            ? AppTheme.lightTheme
+            : AppTheme.darkTheme,
         routerConfig: appRouter.config(),
         builder: (context, child) => ResponsiveBreakpoints.builder(
               child: child!,

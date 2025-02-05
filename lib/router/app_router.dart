@@ -7,8 +7,11 @@ class AppRouter extends RootStackRouter {
   // TODO: implement routes
   List<AutoRoute> get routes {
     return [
-      AutoRoute(page: HomeRoute.page, initial: true),
-      AutoRoute(page: NavigationRoute.page),
+      AutoRoute(page: HomeRoute.page),
+      AutoRoute(
+          initial: true,
+          page: NavigationRoute.page,
+          children: [AutoRoute(page: HomeRoute.page)])
     ];
   }
 }

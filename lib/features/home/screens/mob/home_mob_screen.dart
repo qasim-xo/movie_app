@@ -26,8 +26,11 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
     trendingMoviesController.addListener(() {
       if (trendingMoviesController.position.pixels ==
           trendingMoviesController.position.maxScrollExtent) {
-        print('triggered');
-        ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+        final isLoading = ref.read(trendingMoviesProvider).isLoading;
+
+        if (isLoading == false) {
+          ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+        }
       }
     });
   }
@@ -35,6 +38,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   @override
   Widget build(BuildContext context) {
     final trendingMovies = ref.watch(trendingMoviesProvider);
+    final isLoading = ref.watch(trendingMoviesProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,31 +57,29 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
             SizedBox(
               height: 10,
             ),
-            trendingMovies.isLoading
-                ? Center(child: Center(child: CircularProgressIndicator()))
-                : trendingMovies.error != null
-                    ? Center(child: Text(trendingMovies.error!))
-                    : SizedBox(
-                        height: 300,
-                        child: ListView.separated(
-                          controller: trendingMoviesController,
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          itemCount: trendingMovies.movies.length,
-                          itemBuilder: (context, index) {
-                            final movie = trendingMovies.movies[index];
+            trendingMovies.error != null
+                ? Center(child: Text(trendingMovies.error!))
+                : SizedBox(
+                    height: 300,
+                    child: ListView.separated(
+                      controller: trendingMoviesController,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: trendingMovies.movies.length,
+                      itemBuilder: (context, index) {
+                        final movie = trendingMovies.movies[index];
 
-                            return MovieShowInfoWidget(
-                              title: movie.title,
-                              posterUrl: movie.posterPath,
-                              rating: movie.voteAverage,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(width: 10);
-                          },
-                        ),
-                      ),
+                        return MovieShowInfoWidget(
+                          title: movie.title,
+                          posterUrl: movie.posterPath,
+                          rating: movie.voteAverage,
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(width: 10);
+                      },
+                    ),
+                  ),
           ],
         ),
       ),

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
+import 'package:movie_app/features/home/widgets/movie_show_info_widget.dart';
 
 class HomeMobScreen extends ConsumerStatefulWidget {
   const HomeMobScreen({super.key});
@@ -12,12 +14,21 @@ class HomeMobScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
+  final ScrollController trendingMoviesController = ScrollController();
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+    });
+
+    trendingMoviesController.addListener(() {
+      if (trendingMoviesController.position.pixels ==
+          trendingMoviesController.position.maxScrollExtent) {
+        print('triggered');
+        ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+      }
     });
   }
 
@@ -32,30 +43,38 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
       body: Padding(
         padding: ScreenPadding.screenPadding,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Trending Movies",
               style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
             ),
+            SizedBox(
+              height: 10,
+            ),
             trendingMovies.isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? Center(child: Center(child: CircularProgressIndicator()))
                 : trendingMovies.error != null
                     ? Center(child: Text(trendingMovies.error!))
-                    : Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
+                    : SizedBox(
+                        height: 300,
+                        child: ListView.separated(
+                          controller: trendingMoviesController,
+                          scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemCount: trendingMovies.movies.length,
                           itemBuilder: (context, index) {
                             final movie = trendingMovies.movies[index];
-                            return ListTile(
-                              title: Text(movie.title),
-                              subtitle: Text(movie.overview),
-                              leading: movie.posterPath != null
-                                  ? Image.network(
-                                      'https://image.tmdb.org/t/p/original/${movie.posterPath}')
-                                  : Text("Not available"),
+
+                            return MovieShowInfoWidget(
+                              title: movie.title,
+                              posterUrl: movie.posterPath,
+                              rating: movie.voteAverage,
                             );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(width: 10);
                           },
                         ),
                       ),

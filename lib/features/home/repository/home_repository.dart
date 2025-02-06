@@ -4,11 +4,11 @@ import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
 
 class HomeRepository {
-  Future<List<Movie>> fetchTrendingMovies() async {
+  Future<List<Movie>> fetchTrendingMovies(int page) async {
     try {
       final response = await getIt<Dio>().get(
-        '$baseUrl/trending/movie/week',
-        queryParameters: {'api_key': apiKey},
+        '$baseUrl/movie/popular',
+        queryParameters: {'api_key': apiKey, 'page': page},
       );
 
       if (response.statusCode == 200) {

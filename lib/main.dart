@@ -11,7 +11,7 @@ final appRouter = AppRouter();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  await dotenv.load(fileName: '.env');
   setupDI();
   runApp(ProviderScope(child: const MyApp()));
 }

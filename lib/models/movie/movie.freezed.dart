@@ -33,9 +33,8 @@ mixin _$Movie {
   @JsonKey(name: 'original_title')
   String get originalTitle => throw _privateConstructorUsedError;
   @JsonKey(name: 'overview')
-  String get overview => throw _privateConstructorUsedError;
-  @JsonKey(name: 'popularity')
-  double get popularity => throw _privateConstructorUsedError;
+  String get overview =>
+      throw _privateConstructorUsedError; // @JsonKey(name: 'popularity') @Default(0.0) double popularity,
   @JsonKey(name: 'poster_path')
   String get posterPath => throw _privateConstructorUsedError;
   @JsonKey(name: 'release_date')
@@ -67,7 +66,6 @@ abstract class $MovieCopyWith<$Res> {
       @JsonKey(name: 'original_language') String originalLanguage,
       @JsonKey(name: 'original_title') String originalTitle,
       @JsonKey(name: 'overview') String overview,
-      @JsonKey(name: 'popularity') double popularity,
       @JsonKey(name: 'poster_path') String posterPath,
       @JsonKey(name: 'release_date') String releaseDate,
       @JsonKey(name: 'title') String title,
@@ -96,7 +94,6 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
     Object? originalLanguage = null,
     Object? originalTitle = null,
     Object? overview = null,
-    Object? popularity = null,
     Object? posterPath = null,
     Object? releaseDate = null,
     Object? title = null,
@@ -133,10 +130,6 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
               as String,
-      popularity: null == popularity
-          ? _value.popularity
-          : popularity // ignore: cast_nullable_to_non_nullable
-              as double,
       posterPath: null == posterPath
           ? _value.posterPath
           : posterPath // ignore: cast_nullable_to_non_nullable
@@ -180,7 +173,6 @@ abstract class _$$MovieImplCopyWith<$Res> implements $MovieCopyWith<$Res> {
       @JsonKey(name: 'original_language') String originalLanguage,
       @JsonKey(name: 'original_title') String originalTitle,
       @JsonKey(name: 'overview') String overview,
-      @JsonKey(name: 'popularity') double popularity,
       @JsonKey(name: 'poster_path') String posterPath,
       @JsonKey(name: 'release_date') String releaseDate,
       @JsonKey(name: 'title') String title,
@@ -207,7 +199,6 @@ class __$$MovieImplCopyWithImpl<$Res>
     Object? originalLanguage = null,
     Object? originalTitle = null,
     Object? overview = null,
-    Object? popularity = null,
     Object? posterPath = null,
     Object? releaseDate = null,
     Object? title = null,
@@ -244,10 +235,6 @@ class __$$MovieImplCopyWithImpl<$Res>
           ? _value.overview
           : overview // ignore: cast_nullable_to_non_nullable
               as String,
-      popularity: null == popularity
-          ? _value.popularity
-          : popularity // ignore: cast_nullable_to_non_nullable
-              as double,
       posterPath: null == posterPath
           ? _value.posterPath
           : posterPath // ignore: cast_nullable_to_non_nullable
@@ -288,8 +275,7 @@ class _$MovieImpl implements _Movie {
       @JsonKey(name: 'original_language') this.originalLanguage = '',
       @JsonKey(name: 'original_title') this.originalTitle = '',
       @JsonKey(name: 'overview') this.overview = '',
-      @JsonKey(name: 'popularity') this.popularity = 0.0,
-      @JsonKey(name: 'poster_path') this.posterPath = '',
+      @JsonKey(name: 'poster_path') this.posterPath = 'Not Available',
       @JsonKey(name: 'release_date') this.releaseDate = '',
       @JsonKey(name: 'title') this.title = '',
       @JsonKey(name: 'video') this.video = false,
@@ -327,9 +313,7 @@ class _$MovieImpl implements _Movie {
   @override
   @JsonKey(name: 'overview')
   final String overview;
-  @override
-  @JsonKey(name: 'popularity')
-  final double popularity;
+// @JsonKey(name: 'popularity') @Default(0.0) double popularity,
   @override
   @JsonKey(name: 'poster_path')
   final String posterPath;
@@ -351,7 +335,7 @@ class _$MovieImpl implements _Movie {
 
   @override
   String toString() {
-    return 'Movie(adult: $adult, backdropPath: $backdropPath, genreIds: $genreIds, id: $id, originalLanguage: $originalLanguage, originalTitle: $originalTitle, overview: $overview, popularity: $popularity, posterPath: $posterPath, releaseDate: $releaseDate, title: $title, video: $video, voteAverage: $voteAverage, voteCount: $voteCount)';
+    return 'Movie(adult: $adult, backdropPath: $backdropPath, genreIds: $genreIds, id: $id, originalLanguage: $originalLanguage, originalTitle: $originalTitle, overview: $overview, posterPath: $posterPath, releaseDate: $releaseDate, title: $title, video: $video, voteAverage: $voteAverage, voteCount: $voteCount)';
   }
 
   @override
@@ -370,8 +354,6 @@ class _$MovieImpl implements _Movie {
                 other.originalTitle == originalTitle) &&
             (identical(other.overview, overview) ||
                 other.overview == overview) &&
-            (identical(other.popularity, popularity) ||
-                other.popularity == popularity) &&
             (identical(other.posterPath, posterPath) ||
                 other.posterPath == posterPath) &&
             (identical(other.releaseDate, releaseDate) ||
@@ -395,7 +377,6 @@ class _$MovieImpl implements _Movie {
       originalLanguage,
       originalTitle,
       overview,
-      popularity,
       posterPath,
       releaseDate,
       title,
@@ -426,7 +407,6 @@ abstract class _Movie implements Movie {
       @JsonKey(name: 'original_language') final String originalLanguage,
       @JsonKey(name: 'original_title') final String originalTitle,
       @JsonKey(name: 'overview') final String overview,
-      @JsonKey(name: 'popularity') final double popularity,
       @JsonKey(name: 'poster_path') final String posterPath,
       @JsonKey(name: 'release_date') final String releaseDate,
       @JsonKey(name: 'title') final String title,
@@ -457,10 +437,7 @@ abstract class _Movie implements Movie {
   @override
   @JsonKey(name: 'overview')
   String get overview;
-  @override
-  @JsonKey(name: 'popularity')
-  double get popularity;
-  @override
+  @override // @JsonKey(name: 'popularity') @Default(0.0) double popularity,
   @JsonKey(name: 'poster_path')
   String get posterPath;
   @override

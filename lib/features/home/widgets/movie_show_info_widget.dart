@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
+import 'package:movie_app/constants/string_constants.dart';
 
 class MovieShowInfoWidget extends ConsumerWidget {
   const MovieShowInfoWidget(
@@ -21,11 +22,11 @@ class MovieShowInfoWidget extends ConsumerWidget {
             borderRadius: BorderRadius.circular(10),
             child: CachedNetworkImage(
               placeholder: (context, url) =>
-                  Center(child: CircularProgressIndicator()),
-              imageUrl: "https://image.tmdb.org/t/p/w500/$posterUrl",
+                  const Center(child: CircularProgressIndicator()),
+              imageUrl: "${TmdbApiStrings.imageBaseUrl}/$posterUrl",
               height: 200,
             )),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
         SizedBox(

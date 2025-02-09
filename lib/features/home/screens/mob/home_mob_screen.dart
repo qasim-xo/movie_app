@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
@@ -41,11 +41,11 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   @override
   Widget build(BuildContext context) {
     final trendingMovies = ref.watch(trendingMoviesProvider);
-    final isLoading = ref.watch(trendingMoviesProvider).isLoading;
+    // final isLoading = ref.watch(trendingMoviesProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
       ),
       body: Padding(
         padding: ScreenPadding.screenPadding,
@@ -57,7 +57,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               "Trending Movies",
               style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             trendingMovies.error != null
@@ -77,7 +77,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                             ref
                                 .read(movieTvShowDetailsProvider.notifier)
                                 .setId(movie.id);
-                            context.router.push(MovieDetailRoute());
+                            context.router.push(const MovieDetailRoute());
                           },
                           child: MovieShowInfoWidget(
                             title: movie.title,
@@ -87,7 +87,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(width: 10);
+                        return const SizedBox(width: 10);
                       },
                     ),
                   ),

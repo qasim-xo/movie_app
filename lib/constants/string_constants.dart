@@ -1,11 +1,20 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final String apiKey = dotenv.env['API_KEY'] ?? 'default_api_key';
+final String tmdbApiKey = dotenv.env['API_KEY'] ?? 'default_api_key';
+final String omdbApiKey = dotenv.env['OMDB_API_KEY'] ?? 'default_api_key';
 const String baseUrl = "https://api.themoviedb.org/3";
+const String omdbBaseUrl = "https://www.omdbapi.com";
+
+class TmdbApiStrings {
+  static const imageBaseUrl = "https://image.tmdb.org/t/p/original";
+}
 
 class AssetIcons {
-  static const String homeIcon = "assets/icons/home.png";
-  static const String tvShowIcon = "assets/icons/tv.png";
-  static const String movieIcon = "assets/icons/video-camera.png";
-  static const String aiIcon = "assets/icons/ai.png";
+  static const String assetIconsPath = "assets/icons";
+
+  static const String homeIcon = "$assetIconsPath/home.png";
+  static const String tvShowIcon = "$assetIconsPath/tv.png";
+  static const String movieIcon = "$assetIconsPath/video-camera.png";
+  static const String aiIcon = "$assetIconsPath/ai.png";
+  static const String starIcon = "$assetIconsPath/star.png";
 }

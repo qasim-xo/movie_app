@@ -22,6 +22,7 @@ _$MovieImpl _$$MovieImplFromJson(Map<String, dynamic> json) => _$MovieImpl(
       title: json['title'] as String? ?? '',
       video: json['video'] as bool? ?? false,
       voteAverage: (json['vote_average'] as num?)?.toDouble() ?? 0.0,
+      imdbRating: json['imdbRating'] as String? ?? '',
       voteCount: (json['vote_count'] as num?)?.toInt() ?? 0,
     );
 
@@ -39,5 +40,6 @@ Map<String, dynamic> _$$MovieImplToJson(_$MovieImpl instance) =>
       'title': instance.title,
       'video': instance.video,
       'vote_average': instance.voteAverage,
+      'imdbRating': instance.imdbRating,
       'vote_count': instance.voteCount,
     };

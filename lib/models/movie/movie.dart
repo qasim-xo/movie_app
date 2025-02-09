@@ -20,6 +20,7 @@ class Movie with _$Movie {
       @JsonKey(name: 'title') @Default('') String title,
       @JsonKey(name: 'video') @Default(false) bool video,
       @JsonKey(name: 'vote_average') @Default(0.0) double voteAverage,
+      @JsonKey(name: 'imdbRating') @Default('') String imdbRating,
       @JsonKey(name: 'vote_count') @Default(0) int voteCount}) = _Movie;
 
   factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);

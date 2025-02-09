@@ -45,6 +45,8 @@ mixin _$Movie {
   bool get video => throw _privateConstructorUsedError;
   @JsonKey(name: 'vote_average')
   double get voteAverage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'imdbRating')
+  String get imdbRating => throw _privateConstructorUsedError;
   @JsonKey(name: 'vote_count')
   int get voteCount => throw _privateConstructorUsedError;
 
@@ -71,6 +73,7 @@ abstract class $MovieCopyWith<$Res> {
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'video') bool video,
       @JsonKey(name: 'vote_average') double voteAverage,
+      @JsonKey(name: 'imdbRating') String imdbRating,
       @JsonKey(name: 'vote_count') int voteCount});
 }
 
@@ -99,6 +102,7 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
     Object? title = null,
     Object? video = null,
     Object? voteAverage = null,
+    Object? imdbRating = null,
     Object? voteCount = null,
   }) {
     return _then(_value.copyWith(
@@ -150,6 +154,10 @@ class _$MovieCopyWithImpl<$Res, $Val extends Movie>
           ? _value.voteAverage
           : voteAverage // ignore: cast_nullable_to_non_nullable
               as double,
+      imdbRating: null == imdbRating
+          ? _value.imdbRating
+          : imdbRating // ignore: cast_nullable_to_non_nullable
+              as String,
       voteCount: null == voteCount
           ? _value.voteCount
           : voteCount // ignore: cast_nullable_to_non_nullable
@@ -178,6 +186,7 @@ abstract class _$$MovieImplCopyWith<$Res> implements $MovieCopyWith<$Res> {
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'video') bool video,
       @JsonKey(name: 'vote_average') double voteAverage,
+      @JsonKey(name: 'imdbRating') String imdbRating,
       @JsonKey(name: 'vote_count') int voteCount});
 }
 
@@ -204,6 +213,7 @@ class __$$MovieImplCopyWithImpl<$Res>
     Object? title = null,
     Object? video = null,
     Object? voteAverage = null,
+    Object? imdbRating = null,
     Object? voteCount = null,
   }) {
     return _then(_$MovieImpl(
@@ -255,6 +265,10 @@ class __$$MovieImplCopyWithImpl<$Res>
           ? _value.voteAverage
           : voteAverage // ignore: cast_nullable_to_non_nullable
               as double,
+      imdbRating: null == imdbRating
+          ? _value.imdbRating
+          : imdbRating // ignore: cast_nullable_to_non_nullable
+              as String,
       voteCount: null == voteCount
           ? _value.voteCount
           : voteCount // ignore: cast_nullable_to_non_nullable
@@ -280,6 +294,7 @@ class _$MovieImpl implements _Movie {
       @JsonKey(name: 'title') this.title = '',
       @JsonKey(name: 'video') this.video = false,
       @JsonKey(name: 'vote_average') this.voteAverage = 0.0,
+      @JsonKey(name: 'imdbRating') this.imdbRating = '',
       @JsonKey(name: 'vote_count') this.voteCount = 0})
       : _genreIds = genreIds;
 
@@ -330,12 +345,15 @@ class _$MovieImpl implements _Movie {
   @JsonKey(name: 'vote_average')
   final double voteAverage;
   @override
+  @JsonKey(name: 'imdbRating')
+  final String imdbRating;
+  @override
   @JsonKey(name: 'vote_count')
   final int voteCount;
 
   @override
   String toString() {
-    return 'Movie(adult: $adult, backdropPath: $backdropPath, genreIds: $genreIds, id: $id, originalLanguage: $originalLanguage, originalTitle: $originalTitle, overview: $overview, posterPath: $posterPath, releaseDate: $releaseDate, title: $title, video: $video, voteAverage: $voteAverage, voteCount: $voteCount)';
+    return 'Movie(adult: $adult, backdropPath: $backdropPath, genreIds: $genreIds, id: $id, originalLanguage: $originalLanguage, originalTitle: $originalTitle, overview: $overview, posterPath: $posterPath, releaseDate: $releaseDate, title: $title, video: $video, voteAverage: $voteAverage, imdbRating: $imdbRating, voteCount: $voteCount)';
   }
 
   @override
@@ -362,6 +380,8 @@ class _$MovieImpl implements _Movie {
             (identical(other.video, video) || other.video == video) &&
             (identical(other.voteAverage, voteAverage) ||
                 other.voteAverage == voteAverage) &&
+            (identical(other.imdbRating, imdbRating) ||
+                other.imdbRating == imdbRating) &&
             (identical(other.voteCount, voteCount) ||
                 other.voteCount == voteCount));
   }
@@ -382,6 +402,7 @@ class _$MovieImpl implements _Movie {
       title,
       video,
       voteAverage,
+      imdbRating,
       voteCount);
 
   @JsonKey(ignore: true)
@@ -412,6 +433,7 @@ abstract class _Movie implements Movie {
       @JsonKey(name: 'title') final String title,
       @JsonKey(name: 'video') final bool video,
       @JsonKey(name: 'vote_average') final double voteAverage,
+      @JsonKey(name: 'imdbRating') final String imdbRating,
       @JsonKey(name: 'vote_count') final int voteCount}) = _$MovieImpl;
 
   factory _Movie.fromJson(Map<String, dynamic> json) = _$MovieImpl.fromJson;
@@ -452,6 +474,9 @@ abstract class _Movie implements Movie {
   @override
   @JsonKey(name: 'vote_average')
   double get voteAverage;
+  @override
+  @JsonKey(name: 'imdbRating')
+  String get imdbRating;
   @override
   @JsonKey(name: 'vote_count')
   int get voteCount;

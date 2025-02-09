@@ -6,9 +6,8 @@ import 'package:movie_app/utils/dependency_injection.dart';
 class MovieTvShowDetailsRepository {
   Future<MovieDetail> fetchMovieDetails(int id) async {
     try {
-      final response = await getIt<Dio>().get(
-          'https://api.themoviedb.org/3/movie/$id',
-          queryParameters: {'api_key': apiKey});
+      final response = await getIt<Dio>()
+          .get('$baseUrl/movie/$id', queryParameters: {'api_key': tmdbApiKey});
 
       if (response.statusCode == 200) {
         return MovieDetail.fromJson(response.data);

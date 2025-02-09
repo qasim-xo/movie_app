@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/features/movie_tv_show_details/repository/movie_tv_show_details_repository.dart';
-import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/models/movie_detail/movie_detail.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
 

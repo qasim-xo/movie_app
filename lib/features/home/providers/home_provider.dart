@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter/material.dart';
 import 'package:movie_app/features/home/repository/home_repository.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/utils/dependency_injection.dart';

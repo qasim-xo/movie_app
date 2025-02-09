@@ -9,6 +9,7 @@ part 'movie_detail.g.dart';
 abstract class MovieDetail with _$MovieDetail {
   @JsonSerializable(explicitToJson: true)
   factory MovieDetail(
+      // ignore: invalid_annotation_target
       {@JsonKey(name: 'adult') @Default(false) bool adult,
       @JsonKey(name: 'backdrop_path') @Default('') String backdropPath,
       @JsonKey(name: 'budget') @Default(0) int budget,

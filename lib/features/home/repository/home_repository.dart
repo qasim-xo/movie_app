@@ -21,8 +21,9 @@ class HomeRepository {
         movies = await Future.wait(movies.map((movie) async {
           MovieDetail movieDetail =
               await MovieTvShowDetailsRepository().fetchMovieDetails(movie.id);
-          String? imdbRating = await fetchImdbRating(movieDetail.imdbId);
-          return movie.copyWith(imdbRating: imdbRating ?? '');
+          String? imdbRating =
+              await fetchImdbRating(movieDetail.imdbId) ?? 'N/A';
+          return movie.copyWith(imdbRating: imdbRating);
         }).toList());
 
         // movie.imdbRating = fetchImdbRating(movieDetail.imdbId);
@@ -36,15 +37,20 @@ class HomeRepository {
     }
   }
 
-  Future<String?> fetchImdbRating(String imdbId) async {
+  Future<String?> fetchImdbRating(String? imdbId) async {
     try {
-      final response = await getIt<Dio>().get(
-        '$omdbBaseUrl/',
-        queryParameters: {'apikey': omdbApiKey, 'i': imdbId},
-      );
-      if (response.statusCode == 200) {
-        String imdbRating = response.data['imdbRating'];
-        return imdbRating;
+      if (imdbId != null || imdbId != '') {
+        final response = await getIt<Dio>().get(
+          '$omdbBaseUrl/',
+          queryParameters: {'apikey': omdbApiKey, 'i': imdbId},
+        );
+        if (response.statusCode == 200) {
+          String imdbRating = response.data['imdbRating'] ?? 'N/A';
+          return imdbRating;
+        } else {
+          print("you got it");
+          return null;
+        }
       } else {
         return null;
       }

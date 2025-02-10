@@ -53,6 +53,7 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
     final trendingMovies = ref.watch(trendingMoviesProvider);
     final searchMovieQuery = ref.watch(searchMovieProvider);
     final searchMovies = ref.watch(moviesProvider);
+    final isLoading = ref.watch(moviesProvider).isLoading;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,12 +77,16 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
             searchMovieQuery.isEmpty
                 ? Expanded(
                     child: MovieGridWidget(
-                        movies: trendingMovies.movies,
-                        scrollController: movieController))
+                    movies: trendingMovies.movies,
+                    scrollController: movieController,
+                    isLoading: isLoading,
+                  ))
                 : Expanded(
                     child: MovieGridWidget(
-                        movies: searchMovies.movies,
-                        scrollController: searchedMoviesController))
+                    movies: searchMovies.movies,
+                    scrollController: searchedMoviesController,
+                    isLoading: isLoading,
+                  ))
           ],
         ),
       ),

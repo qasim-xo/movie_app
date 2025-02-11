@@ -21,14 +21,14 @@ class MoviesRepository {
         List<Movie> movies =
             data.map((movieJson) => Movie.fromJson(movieJson)).toList();
 
-        movies = await Future.wait(movies.map((movie) async {
-          MovieDetail movieDetail = await getIt<MovieTvShowDetailsRepository>()
-              .fetchMovieDetails(movie.id);
-          String? imdbRating = await getIt<HomeRepository>()
-                  .fetchImdbRating(movieDetail.imdbId) ??
-              'N/A';
-          return movie.copyWith(imdbRating: imdbRating);
-        }).toList());
+        // movies = await Future.wait(movies.map((movie) async {
+        //   MovieDetail movieDetail = await getIt<MovieTvShowDetailsRepository>()
+        //       .fetchMovieDetails(movie.id);
+        //   String? imdbRating = await getIt<HomeRepository>()
+        //           .fetchImdbRating(movieDetail.imdbId) ??
+        //       'N/A';
+        //   return movie.copyWith(imdbRating: imdbRating);
+        // }).toList());
 
         // movie.imdbRating = fetchImdbRating(movieDetail.imdbId);
 

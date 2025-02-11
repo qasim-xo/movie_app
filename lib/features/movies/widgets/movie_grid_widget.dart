@@ -38,60 +38,64 @@ class MovieGridWidget extends ConsumerWidget {
         }
 
         final movie = movies[index];
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Stack(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl:
-                          "${TmdbApiStrings.imageBaseUrl}/${movie.posterPath}",
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      errorWidget: (context, url, error) => const Icon(
-                        Icons.error,
-                        size: 50,
-                        color: Colors.red,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 50,
-                      width: 70,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+        return isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Stack(
                         children: [
-                          Image.asset(
-                            AssetIcons.starIcon,
-                            height: 15,
-                            width: 15,
+                          CachedNetworkImage(
+                            imageUrl:
+                                "${TmdbApiStrings.imageBaseUrl}/${movie.posterPath}",
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) => const Icon(
+                              Icons.error,
+                              size: 50,
+                              color: Colors.red,
+                            ),
                           ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            movie.imdbRating,
-                            style: context.textTheme.bodyMedium
-                                ?.copyWith(color: AppColors.white),
-                          ),
+                          SizedBox(
+                            height: 50,
+                            width: 70,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AssetIcons.starIcon,
+                                  height: 15,
+                                  width: 15,
+                                ),
+                                const SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  movie.imdbRating,
+                                  style: context.textTheme.bodyMedium
+                                      ?.copyWith(color: AppColors.white),
+                                ),
+                              ],
+                            ),
+                          ).asGlass()
                         ],
-                      ),
-                    ).asGlass()
-                  ],
-                )),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              movie.title,
-              style: context.textTheme.bodyMedium
-                  ?.copyWith(color: AppColors.black),
-            )
-          ],
-        );
+                      )),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    movie.title,
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(color: AppColors.black),
+                  )
+                ],
+              );
       },
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +19,7 @@ class MovieMobileScreen extends ConsumerStatefulWidget {
 class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
   final ScrollController movieController = ScrollController();
   final ScrollController searchedMoviesController = ScrollController();
+  Timer? debouncer;
   @override
   void initState() {
     super.initState();
@@ -65,9 +68,15 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
           children: [
             SearchBar(
               onChanged: (value) {
-                ref.read(moviesProvider.notifier).setIsFetchFromNextPage(false);
                 ref.read(searchMovieProvider.notifier).state = value;
+                ref.read(moviesProvider.notifier).setIsFetchFromNextPage(false);
+
                 ref.read(moviesProvider.notifier).fetchOnSearch();
+
+                // if (debouncer?.isActive ?? false) debouncer?.cancel();
+                // debouncer = Timer(const Duration(milliseconds: 500), () {
+
+                // });
               },
               leading: const Icon(Icons.search),
             ),

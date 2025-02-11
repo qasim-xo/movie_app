@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_app/features/home/repository/home_repository.dart';
 import 'package:movie_app/features/movies/repository/movies_repository.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
@@ -45,6 +46,18 @@ class MovieNotifier extends Notifier<MovieState> {
     state = state.copyWith(isFetchFromNextPage: val);
   }
 
+  // void fetchImdbRating(String imdbId) {
+  //   final rating = getIt<MoviesRepository>().fetchImdbRating(imdbId);
+  //   if (rating != null) {
+  //     final updatedMovies = state.movies
+  //         .map((movie) => movie.imdbId == imdbId
+  //             ? movie.copyWith(imdbRating: rating)
+  //             : movie)
+  //         .toList();
+  //     state = state.copyWith(movies: updatedMovies);
+  //   }
+  // }
+
   void fetchOnSearch() async {
     state = state.copyWith(isLoading: true);
     final searchQuery = ref.read(searchMovieProvider);
@@ -72,6 +85,13 @@ class MovieNotifier extends Notifier<MovieState> {
             page: 1,
           );
         }
+      } else {
+        final movies = await getIt<HomeRepository>().fetchTrendingMovies(1);
+        state = state.copyWith(
+          isLoading: false,
+          movies: movies,
+          page: 1,
+        );
       }
     } catch (e) {
       print(e.toString());

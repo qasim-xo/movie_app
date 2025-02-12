@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:glass/glass.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
+import 'package:movie_app/features/movies/providers/imdb_rating_provider.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/theme/app_colors.dart';
 
@@ -20,6 +21,11 @@ class MovieGridWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final movieRatings = {
+      for (final movie in movies)
+        movie.id: ref.watch(imdbRatingProvider(movie.id)),
+    };
+
     return GridView.builder(
       controller: scrollController,
       itemCount: movies.length + (isLoading ? 1 : 0),
@@ -31,13 +37,16 @@ class MovieGridWidget extends ConsumerWidget {
       ),
       itemBuilder: (context, index) {
         if (index == movies.length) {
-          // Show loading indicator at the bottom
           return const Center(
             child: CircularProgressIndicator(),
           );
         }
 
         final movie = movies[index];
+
+        //this is the provider
+        final imdbRating = movieRatings[movie.id];
+
         return isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -76,11 +85,29 @@ class MovieGridWidget extends ConsumerWidget {
                                 const SizedBox(
                                   width: 3,
                                 ),
-                                Text(
-                                  movie.imdbRating,
-                                  style: context.textTheme.bodyMedium
-                                      ?.copyWith(color: AppColors.white),
-                                ),
+                                imdbRating?.when(
+                                        data: (rating) {
+                                          if (rating != null) {
+                                            return Text(
+                                              rating,
+                                              style: context
+                                                  .textTheme.bodyMedium
+                                                  ?.copyWith(
+                                                      color: AppColors.white),
+                                            );
+                                          } else {
+                                            return const SizedBox.shrink();
+                                          }
+                                        },
+                                        error: (error, stack) =>
+                                            const Text('Error fetching rating'),
+                                        loading: () => const Text('loading')) ??
+                                    const SizedBox.shrink()
+                                // Text(
+                                //   movie.imdbRating,
+                                //   style: context.textTheme.bodyMedium
+                                //       ?.copyWith(color: AppColors.white),
+                                // ),
                               ],
                             ),
                           ).asGlass()

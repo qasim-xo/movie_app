@@ -60,6 +60,12 @@ class HomeState {
 class HomeNotifier extends StateNotifier<HomeState> {
   HomeNotifier() : super(HomeState.initial());
 
+  void fetchAllMovies() {
+    fetchTopRatedMovies();
+    fetchTrendingMovies();
+    fetchUpcomingMovies();
+  }
+
   Future<void> fetchTrendingMovies() async {
     state = state.copyWith(isLoading: true);
 

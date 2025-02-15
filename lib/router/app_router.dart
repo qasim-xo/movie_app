@@ -9,6 +9,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes {
     return [
       AutoRoute(page: HomeRoute.page),
+      AutoRoute(page: SearchRoute.page),
       AutoRoute(initial: true, page: NavigationRoute.page, children: [
         AutoRoute(page: HomeRoute.page),
         AutoRoute(page: MovieRoute.page)

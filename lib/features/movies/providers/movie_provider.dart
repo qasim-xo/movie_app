@@ -1,10 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/features/home/repository/home_repository.dart';
 import 'package:movie_app/features/movies/repository/movies_repository.dart';
+import 'package:movie_app/features/search/providers/search_provider.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
-
-final searchMovieProvider = StateProvider<String>((ref) => '');
 
 class MovieState {
   final bool isLoading;
@@ -65,7 +64,7 @@ class MovieNotifier extends Notifier<MovieState> {
       if (searchQuery.isNotEmpty) {
         print("first condition");
         if (state.isFetchFromNextPage == true) {
-          final searchedMovies = await getIt<MoviesRepository>()
+          final searchedMovies = await getIt<MoviesTvShowsRepository>()
               .fetchOnSearch(searchQuery, state.page + 1);
 
           final updatedMovies = [...state.movies, ...searchedMovies];
@@ -77,7 +76,7 @@ class MovieNotifier extends Notifier<MovieState> {
         } else {
           print("second condition");
 
-          final searchedMovies = await getIt<MoviesRepository>()
+          final searchedMovies = await getIt<MoviesTvShowsRepository>()
               .fetchOnSearch(searchQuery, state.page);
           state = state.copyWith(
             isLoading: false,

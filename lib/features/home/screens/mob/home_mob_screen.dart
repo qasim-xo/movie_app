@@ -26,40 +26,32 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(homeProvider.notifier).fetchTrendingMovies();
-      ref.read(homeProvider.notifier).fetchTopRatedMovies();
-      ref.read(homeProvider.notifier).fetchUpcomingMovies();
+      ref.read(homeProvider.notifier).fetchAllMovies();
     });
 
-    trendingMoviesController.addListener(() {
-      if (trendingMoviesController.position.pixels ==
-          trendingMoviesController.position.maxScrollExtent) {
+    _setupScrollController(
+      trendingMoviesController,
+      () => ref.read(homeProvider.notifier).fetchTrendingMovies(),
+    );
+    _setupScrollController(
+      topRatedMoviesController,
+      () => ref.read(homeProvider.notifier).fetchTopRatedMovies(),
+    );
+    _setupScrollController(
+      upcomingMoviesController,
+      () => ref.read(homeProvider.notifier).fetchUpcomingMovies(),
+    );
+  }
+
+  void _setupScrollController(
+    ScrollController controller,
+    Future<void> Function() fetchMore,
+  ) {
+    controller.addListener(() {
+      if (controller.position.pixels == controller.position.maxScrollExtent) {
         final isLoading = ref.read(homeProvider).isLoading;
-
-        if (isLoading == false) {
-          ref.read(homeProvider.notifier).fetchTrendingMovies();
-        }
-      }
-    });
-
-    topRatedMoviesController.addListener(() {
-      if (topRatedMoviesController.position.pixels ==
-          topRatedMoviesController.position.maxScrollExtent) {
-        final isLoading = ref.read(homeProvider).isLoading;
-
-        if (isLoading == false) {
-          ref.read(homeProvider.notifier).fetchTopRatedMovies();
-        }
-      }
-    });
-
-    upcomingMoviesController.addListener(() {
-      if (upcomingMoviesController.position.pixels ==
-          upcomingMoviesController.position.maxScrollExtent) {
-        final isLoading = ref.read(homeProvider).isLoading;
-
-        if (isLoading == false) {
-          ref.read(homeProvider.notifier).fetchUpcomingMovies();
+        if (!isLoading) {
+          fetchMore();
         }
       }
     });
@@ -72,6 +64,13 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.router.push(const SearchRoute());
+              },
+              icon: const Icon(Icons.search))
+        ],
         title: const Text('Home'),
       ),
       body: Padding(
@@ -88,11 +87,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               const SizedBox(
                 height: 10,
               ),
-              home.error != null
-                  ? Center(child: Text(home.error!))
-                  : MovieListViewWidget(
-                      controller: trendingMoviesController,
-                      movieList: home.trendingMovies),
+              MovieListViewWidget(
+                  controller: trendingMoviesController,
+                  movieList: home.trendingMovies),
               const SizedBox(
                 height: 10,
               ),
@@ -103,11 +100,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               const SizedBox(
                 height: 10,
               ),
-              home.error != null
-                  ? Center(child: Text(home.error!))
-                  : MovieListViewWidget(
-                      controller: topRatedMoviesController,
-                      movieList: home.topRatedMovies),
+              MovieListViewWidget(
+                  controller: topRatedMoviesController,
+                  movieList: home.topRatedMovies),
               const SizedBox(
                 height: 20,
               ),
@@ -118,11 +113,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               const SizedBox(
                 height: 10,
               ),
-              home.error != null
-                  ? Center(child: Text(home.error!))
-                  : MovieListViewWidget(
-                      controller: upcomingMoviesController,
-                      movieList: home.upcomingMovies),
+              MovieListViewWidget(
+                  controller: upcomingMoviesController,
+                  movieList: home.upcomingMovies),
             ],
           ),
         ),

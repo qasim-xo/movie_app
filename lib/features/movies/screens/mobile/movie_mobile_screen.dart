@@ -7,6 +7,7 @@ import 'package:movie_app/constants/string_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
 import 'package:movie_app/features/movies/providers/movie_provider.dart';
 import 'package:movie_app/features/movies/widgets/movie_grid_widget.dart';
+import 'package:movie_app/features/search/providers/search_provider.dart';
 
 class MovieMobileScreen extends ConsumerStatefulWidget {
   const MovieMobileScreen({super.key});
@@ -66,20 +67,6 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            SearchBar(
-              onChanged: (value) {
-                ref.read(searchMovieProvider.notifier).state = value;
-                ref.read(moviesProvider.notifier).setIsFetchFromNextPage(false);
-
-                ref.read(moviesProvider.notifier).fetchOnSearch();
-
-                // if (debouncer?.isActive ?? false) debouncer?.cancel();
-                // debouncer = Timer(const Duration(milliseconds: 500), () {
-
-                // });
-              },
-              leading: const Icon(Icons.search),
-            ),
             const SizedBox(
               height: 15,
             ),

@@ -12,5 +12,6 @@ void setupDI() {
   getIt.registerLazySingleton<MovieTvShowDetailsRepository>(
       () => MovieTvShowDetailsRepository());
 
-  getIt.registerLazySingleton<MoviesRepository>(() => MoviesRepository());
+  getIt.registerLazySingleton<MoviesTvShowsRepository>(
+      () => MoviesTvShowsRepository());
 }

@@ -24,16 +24,16 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+      ref.read(homeProvider.notifier).fetchTrendingMovies();
     });
 
     movieController.addListener(() {
       if (movieController.position.pixels ==
           movieController.position.maxScrollExtent) {
-        final isLoading = ref.read(trendingMoviesProvider).isLoading;
+        final isLoading = ref.read(homeProvider).isLoading;
 
         if (isLoading == false) {
-          ref.read(trendingMoviesProvider.notifier).fetchTrendingMovies();
+          ref.read(homeProvider.notifier).fetchTrendingMovies();
         }
       }
     });
@@ -53,7 +53,7 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final trendingMovies = ref.watch(trendingMoviesProvider);
+    final trendingMovies = ref.watch(homeProvider);
     final searchMovieQuery = ref.watch(searchMovieProvider);
     final searchMovies = ref.watch(moviesProvider);
     final isLoading = ref.watch(moviesProvider).isLoading;
@@ -86,7 +86,7 @@ class _MovieMobileScreenState extends ConsumerState<MovieMobileScreen> {
             searchMovieQuery.isEmpty
                 ? Expanded(
                     child: MovieGridWidget(
-                    movies: trendingMovies.movies,
+                    movies: trendingMovies.trendingMovies,
                     scrollController: movieController,
                     isLoading: isLoading,
                   ))

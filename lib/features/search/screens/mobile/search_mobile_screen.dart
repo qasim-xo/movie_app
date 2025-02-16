@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/ui_constants.dart';
+import 'package:movie_app/features/home/providers/home_provider.dart';
 import 'package:movie_app/features/movies/providers/movie_provider.dart';
 import 'package:movie_app/features/search/providers/search_provider.dart';
 import 'package:movie_app/features/search/widgets/movie_list_view_item.dart';
@@ -15,9 +16,33 @@ class SearchMobileScreen extends ConsumerStatefulWidget {
 }
 
 class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
+  final moviesController = ScrollController();
+  final tvshowsController = ScrollController();
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(searchProvider.notifier).clearLists();
+    });
+
+    moviesController.addListener(() {
+      if (moviesController.position.pixels ==
+          moviesController.position.maxScrollExtent) {
+        ref.read(searchProvider.notifier).setIsFetchMoviesFromNextPage(true);
+
+        ref.read(searchProvider.notifier).fetchOnSearch();
+      }
+    });
+
+    tvshowsController.addListener(() {
+      if (tvshowsController.position.pixels ==
+          tvshowsController.position.maxScrollExtent) {
+        ref.read(searchProvider.notifier).setIsFetchTvshowsFromNextPage(true);
+
+        ref.read(searchProvider.notifier).fetchTvShowsOnSearch();
+      }
+    });
   }
 
   @override
@@ -27,6 +52,7 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
     final searchTvshows = ref.watch(searchProvider).tvShows;
 
     return DefaultTabController(
+      initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -48,10 +74,13 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                   if (activeTab == 0) {
                     ref
                         .read(searchProvider.notifier)
-                        .setIsFetchFromNextPage(false);
+                        .setIsFetchMoviesFromNextPage(false);
 
                     ref.read(searchProvider.notifier).fetchOnSearch();
                   } else if (activeTab == 1) {
+                    ref
+                        .read(searchProvider.notifier)
+                        .setIsFetchTvshowsFromNextPage(false);
                     ref.read(searchProvider.notifier).fetchTvShowsOnSearch();
                   }
 
@@ -68,6 +97,19 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
               TabBar(
                 onTap: (index) {
                   ref.read(searchProvider.notifier).setActiveTab(index);
+
+                  if (index == 0) {
+                    ref
+                        .read(searchProvider.notifier)
+                        .setIsFetchMoviesFromNextPage(false);
+
+                    ref.read(searchProvider.notifier).fetchOnSearch();
+                  } else if (index == 1) {
+                    ref
+                        .read(searchProvider.notifier)
+                        .setIsFetchTvshowsFromNextPage(false);
+                    ref.read(searchProvider.notifier).fetchTvShowsOnSearch();
+                  }
                 },
                 tabs: [
                   const Tab(icon: Icon(Icons.movie), text: 'Movies'),
@@ -78,6 +120,7 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                 child: TabBarView(
                   children: [
                     ListView.separated(
+                      controller: moviesController,
                       itemCount: searchMovies.length,
                       itemBuilder: (BuildContext context, int index) {
                         final movie = searchMovies[index];
@@ -90,6 +133,7 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                       },
                     ),
                     ListView.separated(
+                      controller: tvshowsController,
                       itemCount: searchTvshows.length,
                       itemBuilder: (BuildContext context, int index) {
                         final movie = searchTvshows[index];

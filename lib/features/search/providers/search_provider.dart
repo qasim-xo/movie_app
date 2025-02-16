@@ -14,9 +14,10 @@ class SearchState {
   final bool isLoading;
   final List<Movie> movies;
   final List<TvShow> tvShows;
-  int page;
-  int tvshowPage;
-  bool isFetchFromNextPage;
+  final int page;
+  final int tvshowPage;
+  final bool isFetchMoviesFromNextPage;
+  final bool isFetchTvshowsFromNextPage;
 
   SearchState(
       {required this.tvShows,
@@ -25,7 +26,8 @@ class SearchState {
       required this.movies,
       required this.page,
       required this.tvshowPage,
-      required this.isFetchFromNextPage});
+      required this.isFetchTvshowsFromNextPage,
+      required this.isFetchMoviesFromNextPage});
 
   SearchState copyWith(
       {int? activeTab,
@@ -34,14 +36,18 @@ class SearchState {
       int? page,
       int? tvshowPage,
       List<TvShow>? tvShows,
-      bool? isFetchFromNextPage}) {
+      bool? isFetchTvshowsFromNextPage,
+      bool? isFetchMoviesFromNextPage}) {
     return SearchState(
         tvshowPage: tvshowPage ?? this.tvshowPage,
         tvShows: tvShows ?? this.tvShows,
         activeTab: activeTab ?? this.activeTab,
-        isFetchFromNextPage: isFetchFromNextPage ?? this.isFetchFromNextPage,
+        isFetchMoviesFromNextPage:
+            isFetchMoviesFromNextPage ?? this.isFetchMoviesFromNextPage,
         isLoading: isLoading ?? this.isLoading,
         movies: movies ?? this.movies,
+        isFetchTvshowsFromNextPage:
+            isFetchTvshowsFromNextPage ?? this.isFetchTvshowsFromNextPage,
         page: page ?? this.page);
   }
 
@@ -52,7 +58,8 @@ class SearchState {
         isLoading: false,
         movies: [],
         page: 1,
-        isFetchFromNextPage: false,
+        isFetchTvshowsFromNextPage: false,
+        isFetchMoviesFromNextPage: false,
         activeTab: 0);
   }
 }
@@ -63,8 +70,16 @@ class SearchNotifier extends Notifier<SearchState> {
     return SearchState.initial();
   }
 
-  void setIsFetchFromNextPage(bool val) {
-    state = state.copyWith(isFetchFromNextPage: val);
+  void clearLists() {
+    state = state.copyWith(movies: [], tvShows: [], activeTab: 0);
+  }
+
+  void setIsFetchMoviesFromNextPage(bool val) {
+    state = state.copyWith(isFetchMoviesFromNextPage: val);
+  }
+
+  void setIsFetchTvshowsFromNextPage(bool val) {
+    state = state.copyWith(isFetchTvshowsFromNextPage: val);
   }
 
   void setActiveTab(int index) {
@@ -89,7 +104,7 @@ class SearchNotifier extends Notifier<SearchState> {
     try {
       if (searchQuery.isNotEmpty) {
         print("first condition");
-        if (state.isFetchFromNextPage == true) {
+        if (state.isFetchMoviesFromNextPage == true) {
           final searchedMovies = await getIt<MoviesTvShowsRepository>()
               .fetchOnSearch(searchQuery, state.page + 1);
 
@@ -125,7 +140,7 @@ class SearchNotifier extends Notifier<SearchState> {
     try {
       if (searchQuery.isNotEmpty) {
         print("first condition");
-        if (state.isFetchFromNextPage == true) {
+        if (state.isFetchTvshowsFromNextPage == true) {
           final searchedTvshows = await getIt<MoviesTvShowsRepository>()
               .fetchTvShowsOnSearch(searchQuery, state.tvshowPage + 1);
 

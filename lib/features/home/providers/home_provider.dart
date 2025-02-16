@@ -24,18 +24,6 @@ class HomeState {
     this.error,
   });
 
-  factory HomeState.initial() {
-    return HomeState(
-        isLoading: false,
-        trendingMovies: [],
-        error: null,
-        page: 1,
-        topRatedMoviesPage: 1,
-        upcomingMoviesPage: 1,
-        topRatedMovies: [],
-        upcomingMovies: []);
-  }
-
   HomeState copyWith(
       {bool? isLoading,
       List<Movie>? trendingMovies,
@@ -55,33 +43,41 @@ class HomeState {
         error: error ?? this.error,
         topRatedMovies: topRatedMovies ?? this.topRatedMovies);
   }
+
+  factory HomeState.initial() {
+    return HomeState(
+        isLoading: false,
+        trendingMovies: [],
+        error: null,
+        page: 1,
+        topRatedMoviesPage: 1,
+        upcomingMoviesPage: 1,
+        topRatedMovies: [],
+        upcomingMovies: []);
+  }
 }
 
-class HomeNotifier extends StateNotifier<HomeState> {
-  HomeNotifier() : super(HomeState.initial());
-
+class HomeNotifier extends Notifier<HomeState> {
   void fetchAllMovies() {
+    state = state.copyWith(isLoading: true);
     fetchTopRatedMovies();
     fetchTrendingMovies();
     fetchUpcomingMovies();
+    state = state.copyWith(isLoading: false);
   }
 
   Future<void> fetchTrendingMovies() async {
-    state = state.copyWith(isLoading: true);
-
     try {
       final movies =
           await getIt<HomeRepository>().fetchTrendingMovies(state.page);
       final updatedMovies = [...state.trendingMovies, ...movies];
 
       state = state.copyWith(
-        isLoading: false,
         trendingMovies: updatedMovies,
         page: state.page + 1,
       );
     } catch (e) {
-      state = state.copyWith(
-          isLoading: false, error: 'Failed to load trending movies');
+      state = state.copyWith(error: 'Failed to load trending movies');
     }
   }
 
@@ -93,7 +89,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
       state = state.copyWith(
           topRatedMovies: updatedTopRatedMovies,
-          page: state.topRatedMoviesPage + 1);
+          topRatedMoviesPage: state.topRatedMoviesPage + 1);
     } catch (e) {
       state = state.copyWith(error: 'Failed to load trending movies');
     }
@@ -107,13 +103,22 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
       state = state.copyWith(
           upcomingMovies: updatedUpcomingMoviesPage,
-          page: state.upcomingMoviesPage + 1);
+          upcomingMoviesPage: state.upcomingMoviesPage + 1);
     } catch (e) {
       state = state.copyWith(error: 'Failed to load trending movies');
     }
   }
+
+  @override
+  HomeState build() {
+    return HomeState.initial();
+  }
 }
 
-final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
-  (ref) => HomeNotifier(),
+final homeProvider = NotifierProvider<HomeNotifier, HomeState>(
+  () => HomeNotifier(),
 );
+
+// final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
+//   () => HomeNotifier(),
+// );

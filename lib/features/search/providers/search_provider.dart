@@ -11,7 +11,7 @@ final searchMovieProvider = StateProvider<String>((ref) => '');
 
 class SearchState {
   final int activeTab;
-  final bool isLoading;
+  final bool isMoviesLoading;
   final List<Movie> movies;
   final List<TvShow> tvShows;
   final int page;
@@ -22,7 +22,7 @@ class SearchState {
   SearchState(
       {required this.tvShows,
       required this.activeTab,
-      required this.isLoading,
+      required this.isMoviesLoading,
       required this.movies,
       required this.page,
       required this.tvshowPage,
@@ -31,7 +31,7 @@ class SearchState {
 
   SearchState copyWith(
       {int? activeTab,
-      bool? isLoading,
+      bool? isMoviesLoading,
       List<Movie>? movies,
       int? page,
       int? tvshowPage,
@@ -44,7 +44,7 @@ class SearchState {
         activeTab: activeTab ?? this.activeTab,
         isFetchMoviesFromNextPage:
             isFetchMoviesFromNextPage ?? this.isFetchMoviesFromNextPage,
-        isLoading: isLoading ?? this.isLoading,
+        isMoviesLoading: isMoviesLoading ?? this.isMoviesLoading,
         movies: movies ?? this.movies,
         isFetchTvshowsFromNextPage:
             isFetchTvshowsFromNextPage ?? this.isFetchTvshowsFromNextPage,
@@ -55,7 +55,7 @@ class SearchState {
     return SearchState(
         tvshowPage: 1,
         tvShows: [],
-        isLoading: false,
+        isMoviesLoading: false,
         movies: [],
         page: 1,
         isFetchTvshowsFromNextPage: false,
@@ -99,7 +99,7 @@ class SearchNotifier extends Notifier<SearchState> {
   // }
 
   void fetchOnSearch() async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isMoviesLoading: true);
     final searchQuery = ref.read(searchMovieProvider);
     try {
       if (searchQuery.isNotEmpty) {
@@ -110,7 +110,7 @@ class SearchNotifier extends Notifier<SearchState> {
 
           final updatedMovies = [...state.movies, ...searchedMovies];
           state = state.copyWith(
-            isLoading: false,
+            isMoviesLoading: false,
             movies: updatedMovies,
             page: state.page + 1,
           );
@@ -120,22 +120,22 @@ class SearchNotifier extends Notifier<SearchState> {
           final searchedMovies = await getIt<MoviesTvShowsRepository>()
               .fetchOnSearch(searchQuery, state.page);
           state = state.copyWith(
-            isLoading: false,
+            isMoviesLoading: false,
             movies: searchedMovies,
             page: 1,
           );
         }
       } else {
-        state = state.copyWith(isLoading: false, movies: []);
+        state = state.copyWith(isMoviesLoading: false, movies: []);
       }
     } catch (e) {
       print(e.toString());
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isMoviesLoading: false);
     }
   }
 
   void fetchTvShowsOnSearch() async {
-    state = state.copyWith(isLoading: true);
+    state = state.copyWith(isMoviesLoading: true);
     final searchQuery = ref.read(searchMovieProvider);
     try {
       if (searchQuery.isNotEmpty) {
@@ -146,7 +146,7 @@ class SearchNotifier extends Notifier<SearchState> {
 
           final updatedTvshows = [...state.tvShows, ...searchedTvshows];
           state = state.copyWith(
-            isLoading: false,
+            isMoviesLoading: false,
             tvShows: updatedTvshows,
             page: state.tvshowPage + 1,
           );
@@ -156,17 +156,17 @@ class SearchNotifier extends Notifier<SearchState> {
           final searchedTvshows = await getIt<MoviesTvShowsRepository>()
               .fetchTvShowsOnSearch(searchQuery, state.tvshowPage);
           state = state.copyWith(
-            isLoading: false,
+            isMoviesLoading: false,
             tvShows: searchedTvshows,
             page: 1,
           );
         }
       } else {
-        state = state.copyWith(isLoading: false, tvShows: []);
+        state = state.copyWith(isMoviesLoading: false, tvShows: []);
       }
     } catch (e) {
       print(e.toString());
-      state = state.copyWith(isLoading: false);
+      state = state.copyWith(isMoviesLoading: false);
     }
   }
 }

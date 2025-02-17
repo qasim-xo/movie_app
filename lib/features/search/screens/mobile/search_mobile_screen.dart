@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_app/constants/data_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
 import 'package:movie_app/features/movies/providers/movie_provider.dart';
@@ -51,6 +52,8 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
     final searchMovies = ref.watch(searchProvider).movies;
     final searchTvshows = ref.watch(searchProvider).tvShows;
 
+    final isMoviesLoading = ref.watch(searchProvider).isMoviesLoading;
+    final Debouncer debouncer = Debouncer(milliseconds: 500);
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
@@ -76,12 +79,17 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                         .read(searchProvider.notifier)
                         .setIsFetchMoviesFromNextPage(false);
 
-                    ref.read(searchProvider.notifier).fetchOnSearch();
+                    debouncer.run(() {
+                      ref.read(searchProvider.notifier).fetchOnSearch();
+                    });
                   } else if (activeTab == 1) {
                     ref
                         .read(searchProvider.notifier)
                         .setIsFetchTvshowsFromNextPage(false);
-                    ref.read(searchProvider.notifier).fetchTvShowsOnSearch();
+
+                    debouncer.run(() {
+                      ref.read(searchProvider.notifier).fetchTvShowsOnSearch();
+                    });
                   }
 
                   // if (debouncer?.isActive ?? false) debouncer?.cancel();
@@ -119,19 +127,24 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
               Expanded(
                 child: TabBarView(
                   children: [
-                    ListView.separated(
-                      controller: moviesController,
-                      itemCount: searchMovies.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final movie = searchMovies[index];
-                        return MovieListViewItem(movie: movie);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          height: 10,
-                        );
-                      },
-                    ),
+                    isMoviesLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : ListView.separated(
+                            controller: moviesController,
+                            itemCount: searchMovies.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final movie = searchMovies[index];
+                              return MovieListViewItem(movie: movie);
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return const SizedBox(
+                                height: 10,
+                              );
+                            },
+                          ),
                     ListView.separated(
                       controller: tvshowsController,
                       itemCount: searchTvshows.length,

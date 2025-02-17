@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_app/constants/data_constants.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
@@ -21,6 +22,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   final ScrollController trendingMoviesController = ScrollController();
   final ScrollController topRatedMoviesController = ScrollController();
   final ScrollController upcomingMoviesController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -60,6 +62,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   @override
   Widget build(BuildContext context) {
     final home = ref.watch(homeProvider);
+
     // final isLoading = ref.watch(trendingMoviesProvider).isLoading;
 
     return Scaffold(

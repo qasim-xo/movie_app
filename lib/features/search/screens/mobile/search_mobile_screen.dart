@@ -149,8 +149,8 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                       controller: tvshowsController,
                       itemCount: searchTvshows.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final movie = searchTvshows[index];
-                        return MovieListViewItem(tvshow: movie);
+                        final tvshow = searchTvshows[index];
+                        return MovieListViewItem(tvshow: tvshow);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return const SizedBox(

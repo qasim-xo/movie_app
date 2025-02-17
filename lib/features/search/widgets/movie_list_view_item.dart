@@ -15,21 +15,32 @@ class MovieListViewItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        CachedNetworkImage(
-          height: 200,
-          width: 200,
-          imageUrl: tvshow == null
-              ? "${TmdbApiStrings.imageBaseUrl}/${movie?.posterPath}"
-              : "${TmdbApiStrings.imageBaseUrl}/${tvshow?.posterPath}",
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) => const Icon(
-            Icons.error,
-            size: 50,
-            color: Colors.red,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: CachedNetworkImage(
+            fit: BoxFit.cover,
+            height: 200,
+            width: 150,
+            imageUrl: tvshow == null
+                ? "${TmdbApiStrings.imageBaseUrl}/${movie?.posterPath}"
+                : "${TmdbApiStrings.imageBaseUrl}/${tvshow?.posterPath}",
+            placeholder: (context, url) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => const Icon(
+              Icons.error,
+              size: 50,
+              color: Colors.red,
+            ),
           ),
         ),
+        Column(
+          children: [
+            movie == null
+                ? Text(tvshow?.name ?? 'No Title Found')
+                : Text(movie?.title ?? 'No Title Found')
+          ],
+        )
       ],
     );
   }

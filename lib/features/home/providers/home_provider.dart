@@ -1,19 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/features/home/repository/home_repository.dart';
 import 'package:movie_app/models/movie/movie.dart';
+import 'package:movie_app/models/tv_show/tv_show.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
 
 class HomeState {
+  final int selectedChip;
   final int page;
   final int topRatedMoviesPage;
   final int upcomingMoviesPage;
+  final int trendingTvshowsPage;
+  final int topRatedTvshowsPage;
   final bool isLoading;
   final List<Movie> trendingMovies;
   final List<Movie> topRatedMovies;
   final List<Movie> upcomingMovies;
+  final List<TvShow> trendingTvshows;
+  final List<TvShow> topRatedTvshows;
   final String? error;
 
   HomeState({
+    required this.topRatedTvshowsPage,
+    required this.topRatedTvshows,
+    required this.trendingTvshowsPage,
+    required this.selectedChip,
     required this.page,
     required this.isLoading,
     required this.trendingMovies,
@@ -21,16 +31,22 @@ class HomeState {
     required this.upcomingMovies,
     required this.topRatedMoviesPage,
     required this.upcomingMoviesPage,
+    required this.trendingTvshows,
     this.error,
   });
 
   HomeState copyWith(
-      {bool? isLoading,
+      {int? selectedChip,
+      bool? isLoading,
+      List<TvShow>? topRatedTvshows,
+      int? topRatedTvshowsPage,
       List<Movie>? trendingMovies,
       List<Movie>? topRatedMovies,
       List<Movie>? upcomingMovies,
       int? topRatedMoviesPage,
       int? upcomingMoviesPage,
+      List<TvShow>? trendingTvshows,
+      int? trendingTvshowsPage,
       String? error,
       int? page}) {
     return HomeState(
@@ -41,7 +57,12 @@ class HomeState {
         trendingMovies: trendingMovies ?? this.trendingMovies,
         upcomingMovies: upcomingMovies ?? this.upcomingMovies,
         error: error ?? this.error,
-        topRatedMovies: topRatedMovies ?? this.topRatedMovies);
+        topRatedMovies: topRatedMovies ?? this.topRatedMovies,
+        selectedChip: selectedChip ?? this.selectedChip,
+        trendingTvshows: trendingTvshows ?? this.trendingTvshows,
+        trendingTvshowsPage: trendingTvshowsPage ?? this.trendingTvshowsPage,
+        topRatedTvshowsPage: topRatedTvshowsPage ?? this.topRatedTvshowsPage,
+        topRatedTvshows: topRatedTvshows ?? this.topRatedTvshows);
   }
 
   factory HomeState.initial() {
@@ -53,7 +74,12 @@ class HomeState {
         topRatedMoviesPage: 1,
         upcomingMoviesPage: 1,
         topRatedMovies: [],
-        upcomingMovies: []);
+        upcomingMovies: [],
+        selectedChip: 0,
+        trendingTvshows: [],
+        trendingTvshowsPage: 1,
+        topRatedTvshowsPage: 1,
+        topRatedTvshows: []);
   }
 }
 
@@ -64,6 +90,10 @@ class HomeNotifier extends Notifier<HomeState> {
     fetchTrendingMovies();
     fetchUpcomingMovies();
     state = state.copyWith(isLoading: false);
+  }
+
+  void setSelectedChip(int index) {
+    state = state.copyWith(selectedChip: index);
   }
 
   Future<void> fetchTrendingMovies() async {
@@ -78,6 +108,19 @@ class HomeNotifier extends Notifier<HomeState> {
       );
     } catch (e) {
       state = state.copyWith(error: 'Failed to load trending movies');
+    }
+  }
+
+  Future<void> fetchTrendingTvshows() async {
+    try {
+      final tvShows = await getIt<HomeRepository>()
+          .fetchTrendingTvShows(state.trendingTvshowsPage);
+      final updatedTvShows = [...state.trendingTvshows, ...tvShows];
+      state = state.copyWith(
+          trendingTvshows: updatedTvShows,
+          trendingTvshowsPage: state.trendingTvshowsPage + 1);
+    } catch (e) {
+      state = state.copyWith(error: 'Failed to load trending tvshows');
     }
   }
 

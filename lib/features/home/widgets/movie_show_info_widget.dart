@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
+import 'package:movie_app/shared/widgets/imdb_rating_card.dart';
 
 class MovieShowInfoWidget extends ConsumerWidget {
   const MovieShowInfoWidget(
@@ -18,24 +19,41 @@ class MovieShowInfoWidget extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              imageUrl: "${TmdbApiStrings.imageBaseUrl}/$posterUrl",
-              height: 200,
-            )),
+        Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: CachedNetworkImage(
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                imageUrl: "${TmdbApiStrings.imageBaseUrl}/$posterUrl",
+                height: 200,
+                width: 140,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+                top: 10,
+                left: 10,
+                child: ImdbRatingCard(
+                    rating: rating?.toStringAsFixed(1).toString() ?? ''))
+          ],
+        ),
         const SizedBox(
           height: 5,
         ),
-        SizedBox(
-          width: 100,
-          child: Text("$title ($rating)",
-              softWrap: true,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: context.textTheme.bodyMedium?.copyWith(fontSize: 12)),
+        Row(
+          children: [
+            SizedBox(
+              width: 100,
+              child: Text(title,
+                  softWrap: true,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.bodyMedium?.copyWith(fontSize: 12)),
+            ),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+          ],
         )
       ],
     );

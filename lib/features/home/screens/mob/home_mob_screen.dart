@@ -8,6 +8,7 @@ import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
 import 'package:movie_app/features/home/widgets/movie_list_view_widget.dart';
 import 'package:movie_app/features/home/widgets/movie_show_info_widget.dart';
+import 'package:movie_app/features/home/widgets/tv_shows_list_view_widget.dart';
 import 'package:movie_app/features/movie_tv_show_details/providers/movie_tv_show_details_provider.dart';
 import 'package:movie_app/router/app_router.gr.dart';
 
@@ -22,6 +23,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   final ScrollController trendingMoviesController = ScrollController();
   final ScrollController topRatedMoviesController = ScrollController();
   final ScrollController upcomingMoviesController = ScrollController();
+  final ScrollController trendingTvshowsController = ScrollController();
 
   @override
   void initState() {
@@ -62,6 +64,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   @override
   Widget build(BuildContext context) {
     final home = ref.watch(homeProvider);
+    final selectedChip = ref.watch(homeProvider).selectedChip;
 
     // final isLoading = ref.watch(trendingMoviesProvider).isLoading;
 
@@ -87,12 +90,47 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                 "Trending Movies",
                 style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
               ),
+              Wrap(
+                children: [
+                  ChoiceChip(
+                    label: const Text('Movies'),
+                    selected: selectedChip == 0,
+                    onSelected: (bool selected) {
+                      if (selected) {
+                        ref.read(homeProvider.notifier).setSelectedChip(0);
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ChoiceChip(
+                    label: const Text('TV Shows'),
+                    selected: selectedChip == 1,
+                    onSelected: (bool selected) {
+                      if (selected) {
+                        ref.read(homeProvider.notifier).setSelectedChip(1);
+
+                        if (home.trendingTvshows.isEmpty) {
+                          ref
+                              .read(homeProvider.notifier)
+                              .fetchTrendingTvshows();
+                        }
+                      }
+                    },
+                  )
+                ],
+              ),
               const SizedBox(
                 height: 10,
               ),
-              MovieListViewWidget(
-                  controller: trendingMoviesController,
-                  movieList: home.trendingMovies),
+              selectedChip == 0
+                  ? MovieListViewWidget(
+                      controller: trendingMoviesController,
+                      movieList: home.trendingMovies)
+                  : TvShowsListViewWidget(
+                      controller: trendingTvshowsController,
+                      movieList: home.trendingTvshows),
               const SizedBox(
                 height: 10,
               ),

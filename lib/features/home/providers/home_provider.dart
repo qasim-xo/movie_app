@@ -5,7 +5,8 @@ import 'package:movie_app/models/tv_show/tv_show.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
 
 class HomeState {
-  final int selectedChip;
+  final int selectedTrendingChip;
+  final int selectedTopRatedChip;
   final int page;
   final int topRatedMoviesPage;
   final int upcomingMoviesPage;
@@ -21,9 +22,10 @@ class HomeState {
 
   HomeState({
     required this.topRatedTvshowsPage,
+    required this.selectedTopRatedChip,
     required this.topRatedTvshows,
     required this.trendingTvshowsPage,
-    required this.selectedChip,
+    required this.selectedTrendingChip,
     required this.page,
     required this.isLoading,
     required this.trendingMovies,
@@ -36,7 +38,7 @@ class HomeState {
   });
 
   HomeState copyWith(
-      {int? selectedChip,
+      {int? selectedTrendingChip,
       bool? isLoading,
       List<TvShow>? topRatedTvshows,
       int? topRatedTvshowsPage,
@@ -48,6 +50,7 @@ class HomeState {
       List<TvShow>? trendingTvshows,
       int? trendingTvshowsPage,
       String? error,
+      int? selectedTopRatedChip,
       int? page}) {
     return HomeState(
         topRatedMoviesPage: topRatedMoviesPage ?? this.topRatedMoviesPage,
@@ -58,11 +61,13 @@ class HomeState {
         upcomingMovies: upcomingMovies ?? this.upcomingMovies,
         error: error ?? this.error,
         topRatedMovies: topRatedMovies ?? this.topRatedMovies,
-        selectedChip: selectedChip ?? this.selectedChip,
+        selectedTrendingChip: selectedTrendingChip ?? this.selectedTrendingChip,
         trendingTvshows: trendingTvshows ?? this.trendingTvshows,
         trendingTvshowsPage: trendingTvshowsPage ?? this.trendingTvshowsPage,
         topRatedTvshowsPage: topRatedTvshowsPage ?? this.topRatedTvshowsPage,
-        topRatedTvshows: topRatedTvshows ?? this.topRatedTvshows);
+        topRatedTvshows: topRatedTvshows ?? this.topRatedTvshows,
+        selectedTopRatedChip:
+            selectedTopRatedChip ?? this.selectedTopRatedChip);
   }
 
   factory HomeState.initial() {
@@ -75,11 +80,12 @@ class HomeState {
         upcomingMoviesPage: 1,
         topRatedMovies: [],
         upcomingMovies: [],
-        selectedChip: 0,
+        selectedTrendingChip: 0,
         trendingTvshows: [],
         trendingTvshowsPage: 1,
         topRatedTvshowsPage: 1,
-        topRatedTvshows: []);
+        topRatedTvshows: [],
+        selectedTopRatedChip: 0);
   }
 }
 
@@ -92,8 +98,12 @@ class HomeNotifier extends Notifier<HomeState> {
     state = state.copyWith(isLoading: false);
   }
 
-  void setSelectedChip(int index) {
-    state = state.copyWith(selectedChip: index);
+  void setTrendingSelectedChip(int index) {
+    state = state.copyWith(selectedTrendingChip: index);
+  }
+
+  void setTopRatedSelectedChip(int index) {
+    state = state.copyWith(selectedTopRatedChip: index);
   }
 
   Future<void> fetchTrendingMovies() async {
@@ -119,6 +129,19 @@ class HomeNotifier extends Notifier<HomeState> {
       state = state.copyWith(
           trendingTvshows: updatedTvShows,
           trendingTvshowsPage: state.trendingTvshowsPage + 1);
+    } catch (e) {
+      state = state.copyWith(error: 'Failed to load trending tvshows');
+    }
+  }
+
+  Future<void> fetchTopRatedTvshows() async {
+    try {
+      final tvShows = await getIt<HomeRepository>()
+          .fetchTopRatedTvshows(state.topRatedTvshowsPage);
+      final updatedTvShows = [...state.topRatedTvshows, ...tvShows];
+      state = state.copyWith(
+          topRatedTvshows: updatedTvShows,
+          topRatedTvshowsPage: state.topRatedTvshowsPage + 1);
     } catch (e) {
       state = state.copyWith(error: 'Failed to load trending tvshows');
     }

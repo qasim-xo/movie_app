@@ -24,6 +24,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   final ScrollController topRatedMoviesController = ScrollController();
   final ScrollController upcomingMoviesController = ScrollController();
   final ScrollController trendingTvshowsController = ScrollController();
+  final ScrollController topRatedTvshowsController = ScrollController();
 
   @override
   void initState() {
@@ -64,7 +65,8 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
   @override
   Widget build(BuildContext context) {
     final home = ref.watch(homeProvider);
-    final selectedChip = ref.watch(homeProvider).selectedChip;
+    final selectedChip = ref.watch(homeProvider).selectedTrendingChip;
+    final selectedTopRatedChip = ref.watch(homeProvider).selectedTopRatedChip;
 
     // final isLoading = ref.watch(trendingMoviesProvider).isLoading;
 
@@ -87,7 +89,7 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Trending Movies",
+                "Trending",
                 style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
               ),
               Wrap(
@@ -97,7 +99,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                     selected: selectedChip == 0,
                     onSelected: (bool selected) {
                       if (selected) {
-                        ref.read(homeProvider.notifier).setSelectedChip(0);
+                        ref
+                            .read(homeProvider.notifier)
+                            .setTrendingSelectedChip(0);
                       }
                     },
                   ),
@@ -109,7 +113,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                     selected: selectedChip == 1,
                     onSelected: (bool selected) {
                       if (selected) {
-                        ref.read(homeProvider.notifier).setSelectedChip(1);
+                        ref
+                            .read(homeProvider.notifier)
+                            .setTrendingSelectedChip(1);
 
                         if (home.trendingTvshows.isEmpty) {
                           ref
@@ -127,23 +133,70 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               selectedChip == 0
                   ? MovieListViewWidget(
                       controller: trendingMoviesController,
-                      movieList: home.trendingMovies)
-                  : TvShowsListViewWidget(
-                      controller: trendingTvshowsController,
-                      movieList: home.trendingTvshows),
+                      movieList: home.trendingMovies,
+                    )
+                  : selectedChip == 1
+                      ? TvShowsListViewWidget(
+                          controller: trendingTvshowsController,
+                          movieList: home.trendingTvshows,
+                        )
+                      : const SizedBox.shrink(),
               const SizedBox(
                 height: 10,
               ),
               Text(
-                "Top Rated Movies",
+                "Top Rated",
                 style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
+              ),
+              Wrap(
+                children: [
+                  ChoiceChip(
+                    label: const Text('Movies'),
+                    selected: selectedTopRatedChip == 0,
+                    onSelected: (bool selected) {
+                      if (selected) {
+                        ref
+                            .read(homeProvider.notifier)
+                            .setTopRatedSelectedChip(0);
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ChoiceChip(
+                    label: const Text('TV Shows'),
+                    selected: selectedTopRatedChip == 1,
+                    onSelected: (bool selected) {
+                      if (selected) {
+                        ref
+                            .read(homeProvider.notifier)
+                            .setTopRatedSelectedChip(1);
+
+                        if (home.topRatedTvshows.isEmpty) {
+                          ref
+                              .read(homeProvider.notifier)
+                              .fetchTopRatedTvshows();
+                        }
+                      }
+                    },
+                  )
+                ],
               ),
               const SizedBox(
                 height: 10,
               ),
-              MovieListViewWidget(
-                  controller: topRatedMoviesController,
-                  movieList: home.topRatedMovies),
+              selectedTopRatedChip == 0
+                  ? MovieListViewWidget(
+                      controller: topRatedMoviesController,
+                      movieList: home.topRatedMovies,
+                    )
+                  : selectedTopRatedChip == 1
+                      ? TvShowsListViewWidget(
+                          controller: topRatedTvshowsController,
+                          movieList: home.topRatedTvshows,
+                        )
+                      : const SizedBox.shrink(),
               const SizedBox(
                 height: 20,
               ),

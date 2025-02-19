@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/core/providers/theme_mode_provider.dart';
+import 'package:movie_app/firebase_options.dart';
 import 'package:movie_app/router/app_router.dart';
 import 'package:movie_app/theme/app_theme.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
@@ -24,6 +26,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: '.env');
   HttpOverrides.global = MyHttpOverrides();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupDI();
   runApp(const ProviderScope(child: MyApp()));
 }

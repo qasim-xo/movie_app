@@ -24,8 +24,10 @@ class MovieShowInfoWidget extends ConsumerWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: CachedNetworkImage(
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => Image.network(
+                  '${TmdbApiStrings.imageBaseUrlLowRes}/$posterUrl',
+                  fit: BoxFit.cover,
+                ),
                 imageUrl: "${TmdbApiStrings.imageBaseUrl}/$posterUrl",
                 height: 200,
                 width: 140,

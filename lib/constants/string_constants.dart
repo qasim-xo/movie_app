@@ -7,6 +7,7 @@ const String omdbBaseUrl = "https://www.omdbapi.com";
 
 class TmdbApiStrings {
   static const imageBaseUrl = "https://image.tmdb.org/t/p/original";
+  static const imageBaseUrlLowRes = "https://image.tmdb.org/t/p/w92";
 }
 
 class AssetIcons {

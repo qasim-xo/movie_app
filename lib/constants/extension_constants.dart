@@ -30,3 +30,9 @@ extension BuildContextExtensions on BuildContext {
     );
   }
 }
+
+extension StringCasingExtension on String {
+  String capitalizeAll() {
+    return toUpperCase();
+  }
+}

@@ -11,6 +11,7 @@ abstract class MovieDetail with _$MovieDetail {
   factory MovieDetail(
       // ignore: invalid_annotation_target
       {@JsonKey(name: 'adult') @Default(false) bool adult,
+      @JsonKey(name: 'overview') @Default('') String overview,
       @JsonKey(name: 'backdrop_path') @Default('') String backdropPath,
       @JsonKey(name: 'budget') @Default(0) int budget,
       @JsonKey(name: 'genres') @Default([]) List<MovieGenre> genres,
@@ -21,6 +22,7 @@ abstract class MovieDetail with _$MovieDetail {
       @JsonKey(name: 'production_companies')
       @Default([])
       List<MovieProductionCompany> productionCompanies,
+      @JsonKey(name: 'poster_path') @Default('') String posterPath,
       @JsonKey(name: 'release_date') @Default('') String releaseDate,
       @JsonKey(name: 'runtime') @Default(0) int movieLength,
       @JsonKey(name: 'tagline') @Default('') String tagline,

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
+import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/movie_tv_show_details/providers/movie_tv_show_details_provider.dart';
 import 'package:movie_app/models/movie_crew/movie_crew.dart';
 import 'package:movie_app/theme/app_colors.dart';
@@ -70,19 +71,77 @@ class _MovieDetailMobileScreenState
                     ),
                   ];
                 },
-                body: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(movieTvShowDetails.title),
-                            Text(director?.name ?? '')
-                          ],
-                        )
-                      ],
-                    )
-                  ],
+                body: Padding(
+                  padding: ScreenPadding.detailScreenPadding,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 170,
+                                child: Text(
+                                  maxLines: 3,
+                                  movieTvShowDetails.title,
+                                  style: context.textTheme.bodyLarge
+                                      ?.copyWith(fontSize: 25),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 7,
+                              ),
+                              const Text('DIRECTED BY'),
+                              Text(
+                                director?.name ?? '',
+                                style: context.textTheme.bodyMedium
+                                    ?.copyWith(fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                      '${movieTvShowDetails.releaseDate.split('-')[0]} • ${movieTvShowDetails.movieLength} min'),
+                                  const SizedBox(
+                                    width: 40,
+                                  ),
+                                  Text(
+                                    'TRAILER',
+                                    style: context.textTheme.bodyMedium
+                                        ?.copyWith(
+                                            fontSize: 16, letterSpacing: 1),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(7),
+                            child: CachedNetworkImage(
+                                height: 170,
+                                fit: BoxFit.cover,
+                                imageUrl:
+                                    '${TmdbApiStrings.imageBaseUrl}/${movieTvShowDetails.posterPath}'),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(movieTvShowDetails.tagline.toUpperCase()),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(movieTvShowDetails.overview)
+                    ],
+                  ),
                 )),
           );
   }

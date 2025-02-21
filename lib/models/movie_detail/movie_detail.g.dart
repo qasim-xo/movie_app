@@ -9,6 +9,7 @@ part of 'movie_detail.dart';
 _$MovieDetailImpl _$$MovieDetailImplFromJson(Map<String, dynamic> json) =>
     _$MovieDetailImpl(
       adult: json['adult'] as bool? ?? false,
+      overview: json['overview'] as String? ?? '',
       backdropPath: json['backdrop_path'] as String? ?? '',
       budget: (json['budget'] as num?)?.toInt() ?? 0,
       genres: (json['genres'] as List<dynamic>?)
@@ -24,6 +25,7 @@ _$MovieDetailImpl _$$MovieDetailImplFromJson(Map<String, dynamic> json) =>
                   MovieProductionCompany.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      posterPath: json['poster_path'] as String? ?? '',
       releaseDate: json['release_date'] as String? ?? '',
       movieLength: (json['runtime'] as num?)?.toInt() ?? 0,
       tagline: json['tagline'] as String? ?? '',
@@ -34,6 +36,7 @@ _$MovieDetailImpl _$$MovieDetailImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$MovieDetailImplToJson(_$MovieDetailImpl instance) =>
     <String, dynamic>{
       'adult': instance.adult,
+      'overview': instance.overview,
       'backdrop_path': instance.backdropPath,
       'budget': instance.budget,
       'genres': instance.genres.map((e) => e.toJson()).toList(),
@@ -43,6 +46,7 @@ Map<String, dynamic> _$$MovieDetailImplToJson(_$MovieDetailImpl instance) =>
       'popularity': instance.popularity,
       'production_companies':
           instance.productionCompanies.map((e) => e.toJson()).toList(),
+      'poster_path': instance.posterPath,
       'release_date': instance.releaseDate,
       'runtime': instance.movieLength,
       'tagline': instance.tagline,

@@ -22,6 +22,8 @@ MovieDetail _$MovieDetailFromJson(Map<String, dynamic> json) {
 mixin _$MovieDetail {
   @JsonKey(name: 'adult')
   bool get adult => throw _privateConstructorUsedError;
+  @JsonKey(name: 'overview')
+  String get overview => throw _privateConstructorUsedError;
   @JsonKey(name: 'backdrop_path')
   String get backdropPath => throw _privateConstructorUsedError;
   @JsonKey(name: 'budget')
@@ -39,6 +41,8 @@ mixin _$MovieDetail {
   @JsonKey(name: 'production_companies')
   List<MovieProductionCompany> get productionCompanies =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: 'poster_path')
+  String get posterPath => throw _privateConstructorUsedError;
   @JsonKey(name: 'release_date')
   String get releaseDate => throw _privateConstructorUsedError;
   @JsonKey(name: 'runtime')
@@ -64,6 +68,7 @@ abstract class $MovieDetailCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'adult') bool adult,
+      @JsonKey(name: 'overview') String overview,
       @JsonKey(name: 'backdrop_path') String backdropPath,
       @JsonKey(name: 'budget') int budget,
       @JsonKey(name: 'genres') List<MovieGenre> genres,
@@ -73,6 +78,7 @@ abstract class $MovieDetailCopyWith<$Res> {
       @JsonKey(name: 'popularity') double popularity,
       @JsonKey(name: 'production_companies')
       List<MovieProductionCompany> productionCompanies,
+      @JsonKey(name: 'poster_path') String posterPath,
       @JsonKey(name: 'release_date') String releaseDate,
       @JsonKey(name: 'runtime') int movieLength,
       @JsonKey(name: 'tagline') String tagline,
@@ -94,6 +100,7 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
   @override
   $Res call({
     Object? adult = null,
+    Object? overview = null,
     Object? backdropPath = null,
     Object? budget = null,
     Object? genres = null,
@@ -102,6 +109,7 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
     Object? originalLanguage = null,
     Object? popularity = null,
     Object? productionCompanies = null,
+    Object? posterPath = null,
     Object? releaseDate = null,
     Object? movieLength = null,
     Object? tagline = null,
@@ -113,6 +121,10 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
           ? _value.adult
           : adult // ignore: cast_nullable_to_non_nullable
               as bool,
+      overview: null == overview
+          ? _value.overview
+          : overview // ignore: cast_nullable_to_non_nullable
+              as String,
       backdropPath: null == backdropPath
           ? _value.backdropPath
           : backdropPath // ignore: cast_nullable_to_non_nullable
@@ -145,6 +157,10 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
           ? _value.productionCompanies
           : productionCompanies // ignore: cast_nullable_to_non_nullable
               as List<MovieProductionCompany>,
+      posterPath: null == posterPath
+          ? _value.posterPath
+          : posterPath // ignore: cast_nullable_to_non_nullable
+              as String,
       releaseDate: null == releaseDate
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
@@ -179,6 +195,7 @@ abstract class _$$MovieDetailImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'adult') bool adult,
+      @JsonKey(name: 'overview') String overview,
       @JsonKey(name: 'backdrop_path') String backdropPath,
       @JsonKey(name: 'budget') int budget,
       @JsonKey(name: 'genres') List<MovieGenre> genres,
@@ -188,6 +205,7 @@ abstract class _$$MovieDetailImplCopyWith<$Res>
       @JsonKey(name: 'popularity') double popularity,
       @JsonKey(name: 'production_companies')
       List<MovieProductionCompany> productionCompanies,
+      @JsonKey(name: 'poster_path') String posterPath,
       @JsonKey(name: 'release_date') String releaseDate,
       @JsonKey(name: 'runtime') int movieLength,
       @JsonKey(name: 'tagline') String tagline,
@@ -207,6 +225,7 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? adult = null,
+    Object? overview = null,
     Object? backdropPath = null,
     Object? budget = null,
     Object? genres = null,
@@ -215,6 +234,7 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
     Object? originalLanguage = null,
     Object? popularity = null,
     Object? productionCompanies = null,
+    Object? posterPath = null,
     Object? releaseDate = null,
     Object? movieLength = null,
     Object? tagline = null,
@@ -226,6 +246,10 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
           ? _value.adult
           : adult // ignore: cast_nullable_to_non_nullable
               as bool,
+      overview: null == overview
+          ? _value.overview
+          : overview // ignore: cast_nullable_to_non_nullable
+              as String,
       backdropPath: null == backdropPath
           ? _value.backdropPath
           : backdropPath // ignore: cast_nullable_to_non_nullable
@@ -258,6 +282,10 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
           ? _value._productionCompanies
           : productionCompanies // ignore: cast_nullable_to_non_nullable
               as List<MovieProductionCompany>,
+      posterPath: null == posterPath
+          ? _value.posterPath
+          : posterPath // ignore: cast_nullable_to_non_nullable
+              as String,
       releaseDate: null == releaseDate
           ? _value.releaseDate
           : releaseDate // ignore: cast_nullable_to_non_nullable
@@ -288,6 +316,7 @@ class __$$MovieDetailImplCopyWithImpl<$Res>
 class _$MovieDetailImpl implements _MovieDetail {
   _$MovieDetailImpl(
       {@JsonKey(name: 'adult') this.adult = false,
+      @JsonKey(name: 'overview') this.overview = '',
       @JsonKey(name: 'backdrop_path') this.backdropPath = '',
       @JsonKey(name: 'budget') this.budget = 0,
       @JsonKey(name: 'genres') final List<MovieGenre> genres = const [],
@@ -297,6 +326,7 @@ class _$MovieDetailImpl implements _MovieDetail {
       @JsonKey(name: 'popularity') this.popularity = 0.0,
       @JsonKey(name: 'production_companies')
       final List<MovieProductionCompany> productionCompanies = const [],
+      @JsonKey(name: 'poster_path') this.posterPath = '',
       @JsonKey(name: 'release_date') this.releaseDate = '',
       @JsonKey(name: 'runtime') this.movieLength = 0,
       @JsonKey(name: 'tagline') this.tagline = '',
@@ -311,6 +341,9 @@ class _$MovieDetailImpl implements _MovieDetail {
   @override
   @JsonKey(name: 'adult')
   final bool adult;
+  @override
+  @JsonKey(name: 'overview')
+  final String overview;
   @override
   @JsonKey(name: 'backdrop_path')
   final String backdropPath;
@@ -349,6 +382,9 @@ class _$MovieDetailImpl implements _MovieDetail {
   }
 
   @override
+  @JsonKey(name: 'poster_path')
+  final String posterPath;
+  @override
   @JsonKey(name: 'release_date')
   final String releaseDate;
   @override
@@ -366,7 +402,7 @@ class _$MovieDetailImpl implements _MovieDetail {
 
   @override
   String toString() {
-    return 'MovieDetail(adult: $adult, backdropPath: $backdropPath, budget: $budget, genres: $genres, id: $id, imdbId: $imdbId, originalLanguage: $originalLanguage, popularity: $popularity, productionCompanies: $productionCompanies, releaseDate: $releaseDate, movieLength: $movieLength, tagline: $tagline, title: $title, voteAverage: $voteAverage)';
+    return 'MovieDetail(adult: $adult, overview: $overview, backdropPath: $backdropPath, budget: $budget, genres: $genres, id: $id, imdbId: $imdbId, originalLanguage: $originalLanguage, popularity: $popularity, productionCompanies: $productionCompanies, posterPath: $posterPath, releaseDate: $releaseDate, movieLength: $movieLength, tagline: $tagline, title: $title, voteAverage: $voteAverage)';
   }
 
   @override
@@ -375,6 +411,8 @@ class _$MovieDetailImpl implements _MovieDetail {
         (other.runtimeType == runtimeType &&
             other is _$MovieDetailImpl &&
             (identical(other.adult, adult) || other.adult == adult) &&
+            (identical(other.overview, overview) ||
+                other.overview == overview) &&
             (identical(other.backdropPath, backdropPath) ||
                 other.backdropPath == backdropPath) &&
             (identical(other.budget, budget) || other.budget == budget) &&
@@ -387,6 +425,8 @@ class _$MovieDetailImpl implements _MovieDetail {
                 other.popularity == popularity) &&
             const DeepCollectionEquality()
                 .equals(other._productionCompanies, _productionCompanies) &&
+            (identical(other.posterPath, posterPath) ||
+                other.posterPath == posterPath) &&
             (identical(other.releaseDate, releaseDate) ||
                 other.releaseDate == releaseDate) &&
             (identical(other.movieLength, movieLength) ||
@@ -402,6 +442,7 @@ class _$MovieDetailImpl implements _MovieDetail {
   int get hashCode => Object.hash(
       runtimeType,
       adult,
+      overview,
       backdropPath,
       budget,
       const DeepCollectionEquality().hash(_genres),
@@ -410,6 +451,7 @@ class _$MovieDetailImpl implements _MovieDetail {
       originalLanguage,
       popularity,
       const DeepCollectionEquality().hash(_productionCompanies),
+      posterPath,
       releaseDate,
       movieLength,
       tagline,
@@ -433,6 +475,7 @@ class _$MovieDetailImpl implements _MovieDetail {
 abstract class _MovieDetail implements MovieDetail {
   factory _MovieDetail(
           {@JsonKey(name: 'adult') final bool adult,
+          @JsonKey(name: 'overview') final String overview,
           @JsonKey(name: 'backdrop_path') final String backdropPath,
           @JsonKey(name: 'budget') final int budget,
           @JsonKey(name: 'genres') final List<MovieGenre> genres,
@@ -442,6 +485,7 @@ abstract class _MovieDetail implements MovieDetail {
           @JsonKey(name: 'popularity') final double popularity,
           @JsonKey(name: 'production_companies')
           final List<MovieProductionCompany> productionCompanies,
+          @JsonKey(name: 'poster_path') final String posterPath,
           @JsonKey(name: 'release_date') final String releaseDate,
           @JsonKey(name: 'runtime') final int movieLength,
           @JsonKey(name: 'tagline') final String tagline,
@@ -455,6 +499,9 @@ abstract class _MovieDetail implements MovieDetail {
   @override
   @JsonKey(name: 'adult')
   bool get adult;
+  @override
+  @JsonKey(name: 'overview')
+  String get overview;
   @override
   @JsonKey(name: 'backdrop_path')
   String get backdropPath;
@@ -479,6 +526,9 @@ abstract class _MovieDetail implements MovieDetail {
   @override
   @JsonKey(name: 'production_companies')
   List<MovieProductionCompany> get productionCompanies;
+  @override
+  @JsonKey(name: 'poster_path')
+  String get posterPath;
   @override
   @JsonKey(name: 'release_date')
   String get releaseDate;

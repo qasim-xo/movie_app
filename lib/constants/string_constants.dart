@@ -18,4 +18,6 @@ class AssetIcons {
   static const String movieIcon = "$assetIconsPath/video-camera.png";
   static const String aiIcon = "$assetIconsPath/ai.png";
   static const String starIcon = "$assetIconsPath/star.png";
+  static const String tmdbIcon = '$assetIconsPath/tmdb.png';
+  static const String imdbIcon = '$assetIconsPath/imdb.png';
 }

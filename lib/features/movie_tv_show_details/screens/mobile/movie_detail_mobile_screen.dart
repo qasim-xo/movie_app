@@ -8,9 +8,8 @@ import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/movie_tv_show_details/providers/movie_tv_show_details_provider.dart';
-import 'package:movie_app/features/movies/providers/imdb_rating_provider.dart';
-import 'package:movie_app/features/video_player/screens/mobile/video_player_mobile_screen.dart';
-import 'package:movie_app/features/video_player/screens/video_player_screen.dart';
+import 'package:movie_app/features/movie_tv_show_details/repository/imdb_rating_provider.dart';
+import 'package:movie_app/features/movie_tv_show_details/widgets/movie_imp_details_widget.dart';
 import 'package:movie_app/models/movie_crew/movie_crew.dart';
 import 'package:movie_app/theme/app_colors.dart';
 
@@ -50,8 +49,6 @@ class _MovieDetailMobileScreenState
 
     final TextStyle style = const TextStyle(fontSize: 16);
     final double maxWidth = MediaQuery.of(context).size.width; // Example width
-    int lineCount =
-        getTextLineCount(movieTvShowDetails.overview, maxWidth, style);
 
     final imdbRating = ref.watch(movieTvShowDetailsProvider).imdbRating;
 
@@ -93,112 +90,15 @@ class _MovieDetailMobileScreenState
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 170,
-                                    child: Text(
-                                      maxLines: 3,
-                                      movieTvShowDetails.title,
-                                      style: context.textTheme.bodyLarge
-                                          ?.copyWith(fontSize: 25),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 7,
-                                  ),
-                                  const Text('DIRECTED BY'),
-                                  Text(
-                                    director?.name ?? '',
-                                    style: context.textTheme.bodyMedium
-                                        ?.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                          '${movieTvShowDetails.releaseDate.split('-')[0]} • ${movieTvShowDetails.movieLength} min'),
-                                      const SizedBox(
-                                        width: 40,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const VideoApp()));
-                                        },
-                                        child: Text(
-                                          'TRAILER',
-                                          style: context.textTheme.bodyMedium
-                                              ?.copyWith(
-                                                  fontSize: 16,
-                                                  letterSpacing: 1,
-                                                  fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(7),
-                                child: CachedNetworkImage(
-                                    height: 170,
-                                    fit: BoxFit.cover,
-                                    imageUrl:
-                                        '${TmdbApiStrings.imageBaseUrl}/${movieTvShowDetails.posterPath}'),
-                              )
-                            ],
-                          ),
+                          MovieImpDetailsWidget(
+                              title: movieTvShowDetails.title,
+                              director: director?.name ?? '',
+                              releaseDate: movieTvShowDetails.releaseDate,
+                              movieLength: movieTvShowDetails.releaseDate,
+                              posterPath: movieTvShowDetails.posterPath),
                           const SizedBox(
                             height: 8,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              ref
-                                  .read(movieTvShowDetailsProvider.notifier)
-                                  .setIsExpand(!isExpand);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                movieTvShowDetails.tagline.isEmpty ||
-                                        movieTvShowDetails.tagline == ''
-                                    ? const SizedBox.shrink()
-                                    : Text(movieTvShowDetails.tagline
-                                        .toUpperCase()),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                isExpand && lineCount > 3
-                                    ? Text(
-                                        softWrap: true,
-                                        movieTvShowDetails.overview,
-                                        style: context.textTheme.bodyMedium,
-                                      )
-                                    : Text(
-                                        movieTvShowDetails.overview,
-                                        softWrap: true,
-                                        maxLines: 3,
-                                      ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: (lineCount > 3 && isExpand) ==
-                                          false //false && false = false
-                                      ? const Icon(Icons.more_horiz)
-                                      : const SizedBox.shrink(),
-                                )
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ),

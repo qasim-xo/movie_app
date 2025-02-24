@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:movie_app/features/director_info/screens/director_info_screen.dart';
 import 'package:movie_app/features/movie_tv_show_details/screens/movie_detail_screen.dart';
 import 'package:movie_app/router/app_router.gr.dart';
 
@@ -14,7 +15,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: HomeRoute.page),
         AutoRoute(page: MovieRoute.page)
       ]),
-      AutoRoute(page: MovieDetailRoute.page)
+      AutoRoute(page: MovieDetailRoute.page),
+      AutoRoute(page: DirectorInfoRoute.page)
     ];
   }
 }

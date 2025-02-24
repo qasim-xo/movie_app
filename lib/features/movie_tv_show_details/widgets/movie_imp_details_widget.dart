@@ -1,8 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
+import 'package:movie_app/features/director_info/providers/director_provider.dart';
+import 'package:movie_app/router/app_router.gr.dart';
 
 class MovieImpDetailsWidget extends ConsumerWidget {
   const MovieImpDetailsWidget({
@@ -12,6 +15,7 @@ class MovieImpDetailsWidget extends ConsumerWidget {
     required this.releaseDate,
     required this.movieLength,
     required this.posterPath,
+    required this.personId,
   });
 
   final String title;
@@ -19,6 +23,7 @@ class MovieImpDetailsWidget extends ConsumerWidget {
   final String releaseDate;
   final String movieLength;
   final String posterPath;
+  final String personId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,10 +46,19 @@ class MovieImpDetailsWidget extends ConsumerWidget {
               height: 7,
             ),
             const Text('DIRECTED BY'),
-            Text(
-              director ?? '',
-              style: context.textTheme.bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                ref
+                    .read(directorProvider.notifier)
+                    .fetchCombinedCrewCredits(personId);
+
+                context.router.push(const DirectorInfoRoute());
+              },
+              child: Text(
+                director ?? '',
+                style: context.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(
               height: 20,

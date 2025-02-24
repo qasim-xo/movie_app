@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/features/home/repository/home_repository.dart';
 import 'package:movie_app/features/movie_tv_show_details/repository/movie_tv_show_details_repository.dart';
+import 'package:movie_app/models/combined_credits_crew/combined_credits_crew.dart';
 import 'package:movie_app/models/movie_crew/movie_crew.dart';
 import 'package:movie_app/models/movie_detail/movie_detail.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
@@ -12,6 +13,7 @@ class MovieTvShowDetailsState {
   final String imdbRating;
   final MovieDetail movieDetail;
   final List<MovieCrew> movieCrew;
+  final List<CombinedCreditsCrew> combinedCreditsCrew;
   final String? error;
 
   MovieTvShowDetailsState(
@@ -21,6 +23,7 @@ class MovieTvShowDetailsState {
       required this.id,
       required this.movieDetail,
       required this.imdbRating,
+      required this.combinedCreditsCrew,
       this.error});
 
   MovieTvShowDetailsState copyWith(
@@ -30,6 +33,7 @@ class MovieTvShowDetailsState {
       MovieDetail? movieDetail,
       String? error,
       String? imdbRating,
+      List<CombinedCreditsCrew>? combinedCreditsCrew,
       List<MovieCrew>? movieCrew}) {
     return MovieTvShowDetailsState(
         isExpand: isExpand ?? this.isExpand,
@@ -38,7 +42,8 @@ class MovieTvShowDetailsState {
         id: id ?? this.id,
         movieDetail: movieDetail ?? this.movieDetail,
         imdbRating: imdbRating ?? this.imdbRating,
-        error: null);
+        error: null,
+        combinedCreditsCrew: combinedCreditsCrew ?? this.combinedCreditsCrew);
   }
 
   factory MovieTvShowDetailsState.initial() {
@@ -50,6 +55,7 @@ class MovieTvShowDetailsState {
       movieCrew: [],
       isExpand: false,
       imdbRating: '',
+      combinedCreditsCrew: [],
     );
   }
 }
@@ -89,6 +95,10 @@ class MovieTvShowDetailsNotifier
       print(e.toString());
       state = state.copyWith(error: e.toString());
     }
+  }
+
+  void fetchMovieCrewCombinedCredits(String personId) {
+    try {} catch (e) {}
   }
 
   // void fetchMovieCrewDetails() async {

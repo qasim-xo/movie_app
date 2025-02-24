@@ -91,11 +91,13 @@ class _MovieDetailMobileScreenState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           MovieImpDetailsWidget(
-                              title: movieTvShowDetails.title,
-                              director: director?.name ?? '',
-                              releaseDate: movieTvShowDetails.releaseDate,
-                              movieLength: movieTvShowDetails.releaseDate,
-                              posterPath: movieTvShowDetails.posterPath),
+                            title: movieTvShowDetails.title,
+                            director: director?.name ?? '',
+                            releaseDate: movieTvShowDetails.releaseDate,
+                            movieLength: movieTvShowDetails.releaseDate,
+                            posterPath: movieTvShowDetails.posterPath,
+                            personId: director?.id.toString() ?? '',
+                          ),
                           const SizedBox(
                             height: 8,
                           ),

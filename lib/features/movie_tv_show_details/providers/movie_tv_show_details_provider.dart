@@ -97,10 +97,6 @@ class MovieTvShowDetailsNotifier
     }
   }
 
-  void fetchMovieCrewCombinedCredits(String personId) {
-    try {} catch (e) {}
-  }
-
   // void fetchMovieCrewDetails() async {
   //   try {
   //     final movieCrew = await getIt<MovieTvShowDetailsRepository>()

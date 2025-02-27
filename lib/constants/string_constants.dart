@@ -1,5 +1,7 @@
 const String baseUrl = "https://api.themoviedb.org/3";
 const String omdbBaseUrl = "https://www.omdbapi.com";
+const String geminiBaseUrl =
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
 class TmdbApiStrings {
   static const imageBaseUrl = "https://image.tmdb.org/t/p/original";

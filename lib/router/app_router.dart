@@ -10,7 +10,8 @@ class AppRouter extends RootStackRouter {
       AutoRoute(page: SearchRoute.page),
       AutoRoute(initial: true, page: NavigationRoute.page, children: [
         AutoRoute(page: HomeRoute.page),
-        AutoRoute(page: MovieRoute.page)
+        AutoRoute(page: MovieRoute.page),
+        AutoRoute(page: AiRoute.page)
       ]),
       AutoRoute(page: MovieDetailRoute.page),
       AutoRoute(page: DirectorInfoRoute.page)

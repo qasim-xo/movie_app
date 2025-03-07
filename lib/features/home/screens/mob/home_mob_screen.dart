@@ -46,6 +46,10 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
       upcomingMoviesController,
       () => ref.read(homeProvider.notifier).fetchUpcomingMovies(),
     );
+    _setupScrollController(trendingTvshowsController,
+        () => ref.read(homeProvider.notifier).fetchTrendingTvshows());
+    _setupScrollController(topRatedTvshowsController,
+        () => ref.read(homeProvider.notifier).fetchTopRatedTvshows());
   }
 
   void _setupScrollController(

@@ -39,7 +39,7 @@ class _MovieDetailMobileScreenState
         ref.watch(movieTvShowDetailsProvider).movieDetail;
 
     final movieCrew = ref.watch(movieTvShowDetailsProvider).movieCrew;
-    final isExpand = ref.watch(movieTvShowDetailsProvider).isExpand;
+    // final isExpand = ref.watch(movieTvShowDetailsProvider).isExpand;
 
     final director = movieCrew.firstWhereOrNull(
       (crewMember) => crewMember.job == "Director",
@@ -47,8 +47,8 @@ class _MovieDetailMobileScreenState
 
     final isLoading = ref.watch(movieTvShowDetailsProvider).isLoading;
 
-    final TextStyle style = const TextStyle(fontSize: 16);
-    final double maxWidth = MediaQuery.of(context).size.width; // Example width
+    // final TextStyle style = const TextStyle(fontSize: 16);
+    // final double maxWidth = MediaQuery.of(context).size.width; // Example width
 
     final imdbRating = ref.watch(movieTvShowDetailsProvider).imdbRating;
 
@@ -136,18 +136,18 @@ class _MovieDetailMobileScreenState
                               Column(
                                 children: [
                                   Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          color: AppColors.greyColor),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 18, vertical: 15),
-                                        child: Image.asset(
-                                          AssetIcons.imdbIcon,
-                                          scale: 12.4,
-                                        ),
-                                      )),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: AppColors.greyColor),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 18, vertical: 15),
+                                      child: Image.asset(
+                                        AssetIcons.imdbIcon,
+                                        scale: 12.4,
+                                      ),
+                                    ),
+                                  ),
                                   Text(imdbRating)
                                 ],
                               )

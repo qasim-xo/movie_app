@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
+import 'package:movie_app/features/home/widgets/movie_tv_settings_sheet.dart';
 import 'package:movie_app/shared/widgets/imdb_rating_card.dart';
 
 class MovieShowInfoWidget extends ConsumerWidget {
@@ -54,7 +55,15 @@ class MovieShowInfoWidget extends ConsumerWidget {
                   overflow: TextOverflow.ellipsis,
                   style: context.textTheme.bodyMedium?.copyWith(fontSize: 12)),
             ),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+            IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        // return MovieTvSettingsSheet(movieTvShowTitle: title, id: ,);
+                      });
+                },
+                icon: const Icon(Icons.more_vert))
           ],
         )
       ],

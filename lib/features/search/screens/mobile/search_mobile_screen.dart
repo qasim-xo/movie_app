@@ -4,8 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/data_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
-import 'package:movie_app/features/home/providers/home_provider.dart';
-import 'package:movie_app/features/movies/providers/movie_provider.dart';
 import 'package:movie_app/features/search/providers/search_provider.dart';
 import 'package:movie_app/features/search/widgets/movie_list_view_item.dart';
 
@@ -123,6 +121,9 @@ class _SearchMobileScreenState extends ConsumerState<SearchMobileScreen> {
                   const Tab(icon: Icon(Icons.movie), text: 'Movies'),
                   const Tab(icon: Icon(Icons.tv), text: 'TV Shows'),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Expanded(
                 child: TabBarView(

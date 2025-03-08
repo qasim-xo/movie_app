@@ -7,12 +7,16 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 @RoutePage()
 class MovieDetailScreen extends ConsumerWidget {
-  const MovieDetailScreen({super.key});
+  const MovieDetailScreen({super.key, required this.id});
+
+  final String id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ResponsiveBreakpoints.of(context).isDesktop
-        ? MovieDetailWebScreen()
-        : MovieDetailMobileScreen();
+        ? const MovieDetailWebScreen()
+        : MovieDetailMobileScreen(
+            id: id,
+          );
   }
 }

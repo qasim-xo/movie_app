@@ -2,14 +2,11 @@ import 'package:auto_route/auto_route.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_app/constants/data_constants.dart';
 import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/ui_constants.dart';
 import 'package:movie_app/features/home/providers/home_provider.dart';
 import 'package:movie_app/features/home/widgets/movie_list_view_widget.dart';
-import 'package:movie_app/features/home/widgets/movie_show_info_widget.dart';
 import 'package:movie_app/features/home/widgets/tv_shows_list_view_widget.dart';
-import 'package:movie_app/features/movie_tv_show_details/providers/movie_tv_show_details_provider.dart';
 import 'package:movie_app/router/app_router.gr.dart';
 
 class HomeMobScreen extends ConsumerStatefulWidget {
@@ -96,6 +93,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
                 "Trending",
                 style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Wrap(
                 children: [
                   ChoiceChip(
@@ -151,6 +151,9 @@ class _HomeMobScreenState extends ConsumerState<HomeMobScreen> {
               Text(
                 "Top Rated",
                 style: context.textTheme.bodyMedium?.copyWith(fontSize: 20),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Wrap(
                 children: [

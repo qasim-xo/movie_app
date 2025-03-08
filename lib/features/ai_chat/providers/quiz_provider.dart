@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/constants/data_constants.dart';
-import 'package:movie_app/features/ai_chat/repository/chat_repo.dart';
 
 final quizProvider = StateNotifierProvider<QuizNotifier, List<String?>>(
   (ref) => QuizNotifier(),

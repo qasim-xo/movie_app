@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app/features/home/widgets/movie_show_info_widget.dart';
-import 'package:movie_app/features/movie_tv_show_details/providers/movie_tv_show_details_provider.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/router/app_router.gr.dart';
 
@@ -30,10 +29,11 @@ class MovieListViewWidget extends ConsumerWidget {
 
           return GestureDetector(
             onTap: () {
-              ref.read(movieTvShowDetailsProvider.notifier).setId(movie.id);
-              context.router.push(const MovieDetailRoute());
+              // ref.read(movieTvShowDetailsProvider.notifier).setId(movie.id);
+              context.router.push(MovieDetailRoute(id: movie.id.toString()));
             },
             child: MovieShowInfoWidget(
+              id: movie.id.toString(),
               title: movie.title,
               posterUrl: movie.posterPath,
               rating: movie.voteAverage,

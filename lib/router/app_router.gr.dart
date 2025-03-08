@@ -9,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
 import 'package:movie_app/features/ai_chat/screens/ai_screen.dart' as _i1;
 import 'package:movie_app/features/director_info/screens/director_info_screen.dart'
     as _i2;
@@ -79,10 +80,17 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.MovieDetailScreen]
-class MovieDetailRoute extends _i8.PageRouteInfo<void> {
-  const MovieDetailRoute({List<_i8.PageRouteInfo>? children})
-      : super(
+class MovieDetailRoute extends _i8.PageRouteInfo<MovieDetailRouteArgs> {
+  MovieDetailRoute({
+    _i9.Key? key,
+    required String id,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
           MovieDetailRoute.name,
+          args: MovieDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
           initialChildren: children,
         );
 
@@ -91,9 +99,29 @@ class MovieDetailRoute extends _i8.PageRouteInfo<void> {
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i4.MovieDetailScreen();
+      final args = data.argsAs<MovieDetailRouteArgs>();
+      return _i4.MovieDetailScreen(
+        key: args.key,
+        id: args.id,
+      );
     },
   );
+}
+
+class MovieDetailRouteArgs {
+  const MovieDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final _i9.Key? key;
+
+  final String id;
+
+  @override
+  String toString() {
+    return 'MovieDetailRouteArgs{key: $key, id: $id}';
+  }
 }
 
 /// generated route for

@@ -2,8 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:movie_app/models/candidate/candidate.dart';
 import 'package:movie_app/models/usage_metadata.dart/usage_metadata.dart';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'gemini_response.freezed.dart';
 part 'gemini_response.g.dart';
 

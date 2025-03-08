@@ -8,11 +8,16 @@ import 'package:movie_app/shared/widgets/imdb_rating_card.dart';
 
 class MovieShowInfoWidget extends ConsumerWidget {
   const MovieShowInfoWidget(
-      {super.key, required this.title, required this.posterUrl, this.rating});
+      {super.key,
+      required this.title,
+      required this.posterUrl,
+      this.rating,
+      required this.id});
 
   final String title;
   final String posterUrl;
   final double? rating;
+  final String id;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,7 +65,10 @@ class MovieShowInfoWidget extends ConsumerWidget {
                   showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        // return MovieTvSettingsSheet(movieTvShowTitle: title, id: ,);
+                        return MovieTvSettingsSheet(
+                            tmdbRating: rating!.toStringAsFixed(2),
+                            movieTvShowTitle: title,
+                            id: id);
                       });
                 },
                 icon: const Icon(Icons.more_vert))

@@ -55,7 +55,7 @@ class MovieImpDetailsWidget extends ConsumerWidget {
                 context.router.push(const DirectorInfoRoute());
               },
               child: Text(
-                director ?? '',
+                director,
                 style: context.textTheme.bodyMedium
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),

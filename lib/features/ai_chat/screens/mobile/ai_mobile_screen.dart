@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,13 +57,7 @@ class AiMobileScreen extends ConsumerWidget {
               .read(movieTvShowDetailsProvider.notifier)
               .setId(int.parse(tmdbId));
 
-          context.router.push(MovieDetailRoute());
-
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => ResultScreen()
-          //   ),
-          // );
+          context.router.push(MovieDetailRoute(id: tmdbId));
         },
       ),
     );

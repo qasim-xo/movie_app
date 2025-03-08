@@ -72,15 +72,15 @@ class MovieTvShowDetailsNotifier
     state = state.copyWith(isExpand: val);
   }
 
-  void fetchMovieDetails() async {
+  void fetchMovieDetails({String? id}) async {
     state = state.copyWith(isLoading: true);
 
     try {
       final movieTvShowDetails = await getIt<MovieTvShowDetailsRepository>()
-          .fetchMovieDetails(state.id);
+          .fetchMovieDetails(id == null ? state.id : int.parse(id));
 
       final movieCrew = await getIt<MovieTvShowDetailsRepository>()
-          .getMovieCrewDetails(state.id.toString());
+          .getMovieCrewDetails(id ?? state.id.toString());
 
       final imdbRating = await getIt<HomeRepository>()
           .fetchImdbRating(movieTvShowDetails.imdbId);
@@ -96,35 +96,9 @@ class MovieTvShowDetailsNotifier
       state = state.copyWith(error: e.toString());
     }
   }
-
-  // void fetchMovieCrewDetails() async {
-  //   try {
-  //     final movieCrew = await getIt<MovieTvShowDetailsRepository>()
-  //         .getMovieCrewDetails(state.id.toString());
-
-  //     state = state.copyWith(
-  //       movieCrew: movieCrew,
-  //     );
-  //   } catch (e) {
-  //     print(e.toString());
-  //     state = state.copyWith(isLoading: false, error: e.toString());
-  //   }
-  // }
-
-  // void fetchMovieImdbRating(String imdbId) async {
-  //   try {
-  //     final imdbRating = await getIt<HomeRepository>().fetchImdbRating(imdbId);
-
-  //     state = state.copyWith(
-  //       imdbRating: imdbRating,
-  //     );
-  //   } catch (e) {
-  //     print(e.toString());
-  //     state = state.copyWith(error: e.toString());
-  //   }
 }
 
-final movieTvShowDetailsProvider =
-    StateNotifierProvider<MovieTvShowDetailsNotifier, MovieTvShowDetailsState>(
+final movieTvShowDetailsProvider = StateNotifierProvider.autoDispose<
+    MovieTvShowDetailsNotifier, MovieTvShowDetailsState>(
   (ref) => MovieTvShowDetailsNotifier(),
 );

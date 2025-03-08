@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:movie_app/constants/api_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
-import 'package:movie_app/models/content/content.dart';
 import 'package:movie_app/utils/dependency_injection.dart';
 
 Future<String> generateText(List<String?> selectedAnswers) async {
@@ -36,21 +35,9 @@ Future<String> generateText(List<String?> selectedAnswers) async {
       String text =
           response.data["candidates"][0]["content"]["parts"][0]["text"];
 
-      print("Response: $text");
-
-      // Parse the JSON response
       Map<String, dynamic> jsonData = jsonDecode(text.trim());
-
-      // Map<String, dynamic> jsonData = json.decode(json.encode(text));
-
-      // String movieName = jsonData["movie_name"] ?? "Unknown";
       String tmdbId = jsonData["tmdb_id"] ?? '0';
-      // String message = jsonData["message"] ?? "";
-
-      // print("Movie Name: $movieName");
       print("TMDB ID: $tmdbId");
-      // print("Message: $message");
-
       return tmdbId;
     } else {
       print("Error: ${response.statusCode} - ${response.data}");

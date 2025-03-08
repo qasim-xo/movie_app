@@ -14,7 +14,6 @@ class Movie with _$Movie {
       @JsonKey(name: 'original_language') @Default('') String originalLanguage,
       @JsonKey(name: 'original_title') @Default('') String originalTitle,
       @JsonKey(name: 'overview') @Default('') String overview,
-      // @JsonKey(name: 'popularity') @Default(0.0) double popularity,
       @JsonKey(name: 'poster_path') @Default('Not Available') String posterPath,
       @JsonKey(name: 'release_date') @Default('') String releaseDate,
       @JsonKey(name: 'title') @Default('') String title,

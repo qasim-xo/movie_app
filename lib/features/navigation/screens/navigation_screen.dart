@@ -2,10 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:movie_app/features/ai_chat/screens/ai_screen.dart';
 import 'package:movie_app/features/navigation/screens/mob/navigation_mob_screen.dart';
 import 'package:movie_app/router/app_router.gr.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 @RoutePage()
 class NavigationScreen extends ConsumerStatefulWidget {

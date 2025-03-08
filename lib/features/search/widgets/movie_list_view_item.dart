@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_app/constants/extension_constants.dart';
 import 'package:movie_app/constants/string_constants.dart';
 import 'package:movie_app/models/movie/movie.dart';
 import 'package:movie_app/models/tv_show/tv_show.dart';
@@ -14,6 +15,7 @@ class MovieListViewItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
@@ -34,13 +36,33 @@ class MovieListViewItem extends ConsumerWidget {
             ),
           ),
         ),
-        Column(
-          children: [
-            movie == null
-                ? Text(tvshow?.name ?? 'No Title Found')
-                : Text(movie?.title ?? 'No Title Found')
-          ],
-        )
+        movie == null
+            ? const Column(
+                children: [],
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    movie?.voteAverage.toString() ?? 'No Rating Found',
+                  ),
+                  Text(
+                    movie?.releaseDate ?? 'No Release Date Found',
+                    style: context.textTheme.bodyMedium
+                        ?.copyWith(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Text(movie?.title ?? 'No title found')
+                ],
+              ),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     movie == null
+        //         ? Text(tvshow?.name ?? 'No Title Found')
+        //         : Text(movie?.title ?? 'No Title Found')
+        //   ],
+        // )
       ],
     );
   }

@@ -13,6 +13,6 @@ class MovieScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ResponsiveBreakpoints.of(context).isDesktop
         ? const MovieWebScreen()
-        : Container();
+        : const MovieMobileScreen();
   }
 }
